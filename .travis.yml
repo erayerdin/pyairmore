@@ -1,11 +1,8 @@
 language: python
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+python: "3.7"
 install:
   pip install -r dev.requirements.txt
   pip install coveralls
 script:
-  - nosetests --cover-branches --with-coverage --cover-erase --verbose --cover-package=exceptive
+  - nosetests --cover-branches --with-coverage --cover-erase --verbose --cover-package=pyairmore
 after_success: coveralls
