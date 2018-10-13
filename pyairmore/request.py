@@ -8,6 +8,7 @@ class AirmoreSession(requests.Session):
     # todo 1 - doc for class
 
     def __init__(self, ip_address: ipaddress.IPv4Address, port: int = 2333):
+        # todo 2 - doc for init
         super().__init__()
 
         self.ip_address = ip_address  # type: ipaddress.IPv4Address
@@ -40,12 +41,13 @@ class AirmoreSession(requests.Session):
                 timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None,
                 json=None):
         # todo 1 - doc for method
-        new_url = self.get_base_url()+url
+        new_url = self.base_url + url
 
         return super().request(method, new_url, params, data, headers, cookies, files, auth, timeout, allow_redirects,
                                proxies, hooks, stream, verify, cert, json)
 
-    def get_base_url(self) -> str:
+    @property
+    def base_url(self) -> str:
         prefix = "http"
 
         if self.is_mocked:

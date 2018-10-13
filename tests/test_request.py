@@ -14,11 +14,11 @@ class MockedAirmoreSession(unittest.TestCase):
             ipaddress.IPv4Address("127.0.0.1"), 2333
         )
 
-        cls.__mount()
-        cls.__register()
+        cls._mount()
+        cls._register()
 
     @classmethod
-    def __mount(cls):
+    def _mount(cls):
         cls.session.is_mocked = True
         cls.session.mount(
             'mock',
@@ -26,7 +26,7 @@ class MockedAirmoreSession(unittest.TestCase):
         )
 
     @classmethod
-    def __register(cls):
+    def _register(cls):
         cls.__register_phone_check_authorization()
         cls.__register_phone_request_authorization()
 
@@ -55,5 +55,5 @@ class AirmoreSessionTestCase(MockedAirmoreSession):
         self.assertTrue(self.session.request_authorization())
 
     def test_base_url(self):
-        base_url = self.session.get_base_url()
+        base_url = self.session.base_url
         self.assertEqual(base_url, "mock://127.0.0.1:2333")
