@@ -13,3 +13,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Process` to manage different aspects of a `Service`, which also extends
  `requests.PreparedRequest`.
    - `DeviceDetailProcess` to request to device detail endpoint of Airmore server
+ - Documentation about getting started
