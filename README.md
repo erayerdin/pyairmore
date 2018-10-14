@@ -58,3 +58,7 @@ sake of simplicity, we will use a service called `DeviceService`.
     device.call_history_count  # 666
     
     # so on and so forth
+
+# Contribution
+
+Please refer to [contribution page](CONTRIBUTING.md) before contributing.
