@@ -13,7 +13,7 @@ the developers to take programmatic actions on Android.
    :maxdepth: 2
    :caption: Contents:
 
-   getting-started
+   getting-started/index
 
 Indices and tables
 ==================
