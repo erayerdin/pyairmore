@@ -61,4 +61,8 @@ sake of simplicity, we will use a service called `DeviceService`.
 
 # Contribution
 
-Please refer to [contribution page](CONTRIBUTING.md) before contributing.
+Please refer to [contribution guide](CONTRIBUTING.md) before contributing.
+
+You can, then, quickly contribute by cloning the project, opening it up with
+your favorite IDE or text editor which supports TODOs and check todos for
+needs, or you can also check the issues.
