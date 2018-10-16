@@ -1,15 +1,19 @@
-version: 1.0.{build}
-clone_folder: c:\projects\pyairmore
+version: {branch}-{build}
+clone_folder: c:\\project\\
+
+environment:
+  matrix:
+    - PYTHON: "c:\\python35-x64"
+    - PYTHON: "c:\\python36-x64"
+
 install:
-- sh: pip install -r dev.requirements.txt
-build_script:
-- sh: tox
+  - %PYTHON%\\python.exe -m pip install -r c:\\project\\dev.requirements.txt
+
+build:
+  - %PYTHON%\\python.exe setup.py sdist
+
 test_script:
-- sh: nosetests --verbose
-notifications:
-- provider: Email
-  to:
-  - eraygezer.94@gmail.com
-  on_build_success: false
-  on_build_failure: true
-  on_build_status_changed: true
+  - %PYTHON%\\python.exe -m nosetests --verbose
+
+artifacts:
+  - path: dist\*
