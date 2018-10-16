@@ -2,6 +2,7 @@
 import ipaddress
 
 import requests
+import requests.exceptions
 
 
 class AirmoreSession(requests.Session):
@@ -17,7 +18,11 @@ class AirmoreSession(requests.Session):
 
     @property
     def is_server_running(self) -> bool:
-        response = self.post("/?Key=PhoneCheckAuthorization")
+        try:
+            response = self.post("/?Key=PhoneCheckAuthorization", timeout=2)
+        except requests.exceptions.ConnectionError:
+            return False
+
         body = response.text  # type: str
 
         is_running = False
