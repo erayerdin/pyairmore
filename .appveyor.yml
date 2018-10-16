@@ -2,9 +2,10 @@ version: 1.0.{build}
 clone_folder: c:\projects\pyairmore
 install:
 - sh: pip install -r dev.requirements.txt
-build: off
-test_script:
+build_script:
 - sh: tox
+test_script:
+- sh: nosetests --verbose
 notifications:
 - provider: Email
   to:
