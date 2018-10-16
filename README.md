@@ -4,6 +4,7 @@
 [![PyPI - License](https://img.shields.io/pypi/l/pyairmore.svg?style=flat-square)](LICENSE.txt)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
 [![PyPI - Status](https://img.shields.io/pypi/status/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f9dcb968a7cc4804b64ae7e0fac3a5be)](https://www.codacy.com/app/erayerdin/pyairmore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erayerdin/pyairmore&amp;utm_campaign=Badge_Grade)
 
 |             | Build (Linux) | Build (Windows) | Coverage |
 |-------------|---------------|-----------------|----------|
