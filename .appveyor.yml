@@ -1,5 +1,5 @@
 version: {branch}-{build}
-clone_folder: c:\\project\\
+clone_folder: c:\project
 
 environment:
   matrix:
@@ -7,13 +7,13 @@ environment:
     - PYTHON: "c:\\python36-x64"
 
 install:
-  - %PYTHON%\\python.exe -m pip install -r c:\\project\\dev.requirements.txt
+  - "%PYTHON%\\python.exe -m pip install -r c:\\project\\dev.requirements.txt"
 
 build:
-  - %PYTHON%\\python.exe setup.py sdist
+  - "%PYTHON%\\python.exe setup.py sdist"
 
 test_script:
-  - %PYTHON%\\python.exe -m nosetests --verbose
+  - "%PYTHON%\\python.exe -m nosetests --verbose"
 
 artifacts:
   - path: dist\*
