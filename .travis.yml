@@ -1,5 +1,10 @@
 language: python
 
+os:
+  - windows
+  - linux
+  - osx
+
 jobs:
   include:
     - stage: "Testing with Specified requests (Python 3.5)"
