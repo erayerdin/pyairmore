@@ -1,5 +1,7 @@
 language: python
 
+if: commit_message !~ /appveyor/
+
 jobs:
   include:
     - stage: "Testing with Specified requests (Python 3.5)"
