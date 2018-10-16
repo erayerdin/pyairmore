@@ -1,17 +1,9 @@
 language: python
 
-python:
-  - "3.5"
-  - "3.6"
-
 jobs:
   include:
     - stage: "Testing with Specified requests (Python 3.5)"
       python: "3.5"
-      os:
-      # - windows # does not work with python
-      - linux
-      - osx
       install: pip install -r dev.requirements.txt
       script: nosetests --verbose
     - stage: "Testing with Specified requests (Python 3.6)"
@@ -24,30 +16,18 @@ jobs:
       script: nosetests --verbose
     - stage: "Testing with Latest Stable requests (Python 3.5)"
       python: "3.5"
-      os:
-      # - windows # does not work with python
-      - linux
-      - osx
       install:
         - pip install -r dev.requirements.txt
         - pip install requests
       script: nosetests --verbose
     - stage: "Testing with Latest Stable requests (Python 3.6)"
       python: "3.6"
-      os:
-      # - windows # does not work with python
-      - linux
-      - osx
       install:
       - pip install -r dev.requirements.txt
       - pip install requests
       script: nosetests --verbose
     - stage: "Covering Package"
       python: "3.6"
-      os:
-      # - windows # does not work with python
-      - linux
-      - osx
       install:
         - pip install -r dev.requirements.txt
         - pip install coverage coveralls
