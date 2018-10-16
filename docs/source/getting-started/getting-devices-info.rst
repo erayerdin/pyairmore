@@ -17,15 +17,15 @@ Once got, you can use ``DeviceService::fetch_device_detail`` method to fetch det
 
 .. code-block:: python
 
- device.fetch_device_detail()
+ detail = device.fetch_device_detail()
 
 And then you can get information from your device as such:
 
 .. code-block:: python
 
- device.power  # 0.74
- device.imei  # whatever your imei is
- device.apks_total_size  # total size of all your applications
+ detail.power  # 0.74
+ detail.imei  # whatever your imei is
+ detail.apks_total_size  # total size of all your applications
 
 See `DeviceService`_ for more detailed info.
 
