@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.0a6] - 2018-10-17
+### Added
+ - Automatic releases on Pypi after test is successful on master with a tag in Travis
+
 ## [0.1.0a5] - 2018-10-16
 ### Changed
  - `AirmoreSession::is_server_running` timeout has been set to 2 seconds
