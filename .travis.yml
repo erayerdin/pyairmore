@@ -1,8 +1,5 @@
 language: python
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+python: "3.7"
 jobs:
   include:
     - stage: "Testing with Specified requests"
@@ -23,11 +20,10 @@ jobs:
         - pip install requests
       script:
         - nosetests --verbose
-    - stage: "Covering Package"
-      python: "3.7"
-      install:
-        - pip install -r dev.requirements.txt
-        - pip install coverage coveralls
-      script:
-        - nosetests --cover-branches --with-coverage --cover-erase --verbose --cover-package=pyairmore
-      after_success: coveralls
+name: "Covering Package"
+install:
+  - pip install -r dev.requirements.txt
+  - pip install coverage coveralls
+script:
+  - nosetests --cover-branches --with-coverage --cover-erase --verbose --cover-package=pyairmore
+after_success: coveralls
