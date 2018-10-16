@@ -2,19 +2,25 @@ language: python
 
 jobs:
   include:
-    - stage: "Testing with Specified requests"
-      python:
-        - "3.5"
-        - "3.6"
+    - stage: "Testing with Specified requests (Python 3.5)"
+      python: "3.5"
       install: pip install -r dev.requirements.txt
       script: nosetests --verbose
-    - stage: "Testing with Latest Stable requests"
-      python:
-        - "3.5"
-        - "3.6"
+    - stage: "Testing with Specified requests (Python 3.6)"
+      python: "3.6"
+      install: pip install -r dev.requirements.txt
+      script: nosetests --verbose
+    - stage: "Testing with Latest Stable requests (Python 3.5)"
+      python: "3.5"
       install:
         - pip install -r dev.requirements.txt
         - pip install requests
+      script: nosetests --verbose
+    - stage: "Testing with Latest Stable requests (Python 3.6)"
+      python: "3.6"
+      install:
+      - pip install -r dev.requirements.txt
+      - pip install requests
       script: nosetests --verbose
     - stage: "Covering Package"
       python: "3.6"
@@ -22,5 +28,5 @@ jobs:
         - pip install -r dev.requirements.txt
         - pip install coverage coveralls
       script:
-        - nosetests --cover-branches --with-coverage --cover-erase --verbose --cover-package=pyairmore
+        - nosetests --cover-branches --with-coverage --verbose --cover-package=pyairmore
       after_success: coveralls
