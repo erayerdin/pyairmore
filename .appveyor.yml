@@ -13,7 +13,7 @@ build_script:
   - "%PYTHON%\\python.exe setup.py sdist"
 
 test_script:
-  - "%PYTHON%\\python.exe -m nosetests --verbose"
+  - "nosetests --verbose"
 
 artifacts:
   - path: dist\*
