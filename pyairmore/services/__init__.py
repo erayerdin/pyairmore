@@ -22,7 +22,7 @@ class AuthorizationException(Exception):
     # todo 1 - class doc
 
     def __init__(self):
-        message = "You are not authorized for this session. Please accept authorization on your phone."
+        message = "You are not authorized for this session. Please accept authorization on target device."
         super().__init__(message)
 
 
@@ -35,7 +35,7 @@ class Service:
         self.session = session
         self._response = None  # type: requests.Response
 
-    def request(self, process_type: typing.ClassVar["Process"]):
+    def request(self, process_type: typing.ClassVar["Process"]) -> requests.Response:
         is_running = self.session.is_server_running
 
         if not is_running:
@@ -48,7 +48,7 @@ class Service:
 
         process = process_type(self)
         process.url = self.session.base_url + process.url
-        self._response = self.session.send(process)
+        return self.session.send(process)
 
 
 class Process(requests.PreparedRequest):

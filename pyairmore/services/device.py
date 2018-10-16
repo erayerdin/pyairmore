@@ -1,26 +1,24 @@
 # todo 1 - package doc
 
+import warnings
+
+from pyairmore.services import Service
+
+try:
+    import PIL
+    import PIL.Image
+except ImportError:
+    warnings.warn("In order to use DeviceService::take_screenshot, you will need 'pillow' module to be installed.",
+                  ImportWarning)
+
 import typing
 
 import pyairmore.request
 import pyairmore.services
 
 
-class DeviceDetailProcess(pyairmore.services.Process):
-    # todo 1 - class doc
-
-    def __init__(self, service: pyairmore.services.Service):
-        super().__init__(service)
-
-        self.url = "/?Key=PhoneGetDeviceInfo&IsDetail=true"
-        self.method = "POST"
-
-
-class DeviceService(pyairmore.services.Service):
-    # todo 1 - class doc
-    def __init__(self, session: pyairmore.request.AirmoreSession):
-        super().__init__(session)
-
+class DeviceDetail:  # todo 1 - device detail class
+    def __init__(self):
         self.model = None  # type: str
         self.brand = None  # type: str
         self.device_name = None  # type: str
@@ -60,48 +58,103 @@ class DeviceService(pyairmore.services.Service):
         self.system_apks_count = 0  # type: int
         self.user_apks_count = 0  # type: int
 
-    def fetch_device_detail(self):
-        self.request(DeviceDetailProcess)
-        data = self._response.json()  # type: dict
+#############
+# Processes #
+#############
 
-        self.model = data.get("Model", None)
-        self.brand = data.get("Brand", None)
-        self.device_name = data.get("DeviceName", None)
+
+class DeviceDetailProcess(pyairmore.services.Process):
+    # todo 1 - class doc
+
+    def __init__(self, service: pyairmore.services.Service):
+        super().__init__(service)
+
+        self.url = "/?Key=PhoneGetDeviceInfo&IsDetail=true"
+        self.method = "POST"
+
+
+class DeviceScreenshotProcess(pyairmore.services.Process):
+
+    def __init__(self, service: Service):
+        super().__init__(service)
+
+        self.url = "/?Key=PhoneRefreshScreen"
+        self.method = "POST"
+
+
+############
+# Services #
+############
+
+
+class DeviceService(pyairmore.services.Service):
+    # todo 1 - class doc
+    def __init__(self, session: pyairmore.request.AirmoreSession):
+        super().__init__(session)
+
+    def fetch_device_detail(self) -> DeviceDetail:
+        # todo 1 - fetch_device_detail doc
+        response = self.request(DeviceDetailProcess)
+        data = response.json()  # type: dict
+        detail = DeviceDetail()
+
+        detail.model = data.get("Model", None)
+        detail.brand = data.get("Brand", None)
+        detail.device_name = data.get("DeviceName", None)
         # if PhoneNumber is "", then stay None
-        self.phone_number = None if data.get("PhoneNumber", None) == "" else data.get("PhoneNumber", None)
-        self.imei = data.get("IMEI", None)
-        self.imsi = data.get("IMSI", None)
-        self.mac_address = data.get("MAC", None)
-        self.serial_number = data.get("SerialNum", None)
-        self.device_serial_number = data.get("DeviceSN", None)
-        self.power = data.get("Power", 0.0) / 100
+        detail.phone_number = None if data.get("PhoneNumber", None) == "" else data.get("PhoneNumber", None)
+        detail.imei = data.get("IMEI", None)
+        detail.imsi = data.get("IMSI", None)
+        detail.mac_address = data.get("MAC", None)
+        detail.serial_number = data.get("SerialNum", None)
+        detail.device_serial_number = data.get("DeviceSN", None)
+        detail.power = data.get("Power", 0.0) / 100
 
         # resolution parsing
         if "*" in data.get("Resolution", ""):
-            self.resolution = tuple(map(lambda x: int(x), data.get("Resolution").split("*", 1)))
+            detail.resolution = tuple(map(lambda x: int(x), data.get("Resolution").split("*", 1)))
 
-        self.is_root = False if data.get("Root", None) == 0 else True
-        self.sdk_version_id = data.get("SDKVersionID", 1)
-        self.sdk_version_name = data.get("SDKVersionName", None)
-        self.platform = data.get("Platform", 1)
-        self.app_version_code = data.get("AppVersionCode", 1)
-        self.app_version_name = data.get("AppVersionName", None)
-        self.is_wifi_on = False if data.get("Wifi", None) == 0 else True
-        self.external_sd_total_size = data.get("ExtSDSize", 0)
-        self.external_sd_available_size = data.get("ExtSDAvaSize", 0)
-        self.internal_sd_total_size = data.get("SDSize", 0)
-        self.internal_sdv_available_size = data.get("SDVAvaSize", 0)
-        self.memory_available_size = data.get("MemoryAvaSize", 0)
-        self.memory_total_size = data.get("MemorySize", 0)
-        self.call_history_count = data.get("CallHistoryCount", 0)
-        self.contacts_count = data.get("ContactCount", 0)
-        self.messages_count = data.get("MsgCount", 0)
-        self.pictures_count = data.get("PicCount", 0)
-        self.pictures_total_size = data.get("PicSize", 0)
-        self.songs_count = data.get("MusicCount", 0)
-        self.songs_total_size = data.get("MusicSize", 0)
-        self.videos_count = data.get("VideoCount", 0)
-        self.videos_total_size = data.get("VideoSize", 0)
-        self.apks_total_size = data.get("APKSize", 0)
-        self.system_apks_count = data.get("SystemApkCount", 0)
-        self.user_apks_count = data.get("UserApkCount", 0)
+        detail.is_root = False if data.get("Root", None) == 0 else True
+        detail.sdk_version_id = data.get("SDKVersionID", 1)
+        detail.sdk_version_name = data.get("SDKVersionName", None)
+        detail.platform = data.get("Platform", 1)
+        detail.app_version_code = data.get("AppVersionCode", 1)
+        detail.app_version_name = data.get("AppVersionName", None)
+        detail.is_wifi_on = False if data.get("Wifi", None) == 0 else True
+        detail.external_sd_total_size = data.get("ExtSDSize", 0)
+        detail.external_sd_available_size = data.get("ExtSDAvaSize", 0)
+        detail.internal_sd_total_size = data.get("SDSize", 0)
+        detail.internal_sdv_available_size = data.get("SDVAvaSize", 0)
+        detail.memory_available_size = data.get("MemoryAvaSize", 0)
+        detail.memory_total_size = data.get("MemorySize", 0)
+        detail.call_history_count = data.get("CallHistoryCount", 0)
+        detail.contacts_count = data.get("ContactCount", 0)
+        detail.messages_count = data.get("MsgCount", 0)
+        detail.pictures_count = data.get("PicCount", 0)
+        detail.pictures_total_size = data.get("PicSize", 0)
+        detail.songs_count = data.get("MusicCount", 0)
+        detail.songs_total_size = data.get("MusicSize", 0)
+        detail.videos_count = data.get("VideoCount", 0)
+        detail.videos_total_size = data.get("VideoSize", 0)
+        detail.apks_total_size = data.get("APKSize", 0)
+        detail.system_apks_count = data.get("SystemApkCount", 0)
+        detail.user_apks_count = data.get("UserApkCount", 0)
+
+        return detail
+
+    def take_screenshot(self) -> PIL.Image:
+        # todo 1 - take_screenshot doc
+
+        response = self.request(DeviceScreenshotProcess)
+        content = response.text
+        content = self.__purify_screenshot_base64_content(content)
+
+        from io import BytesIO
+        import base64
+
+        image = PIL.Image.open(BytesIO(base64.b64decode(content)))
+
+        return image
+
+    def __purify_screenshot_base64_content(self, encoded: str) -> str:
+        return encoded[22:]

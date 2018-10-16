@@ -39,7 +39,7 @@ class AirmoreSession(requests.Session):
 
     def request(self, method, url, params=None, data=None, headers=None, cookies=None, files=None, auth=None,
                 timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None,
-                json=None):
+                json=None) -> requests.Response:
         # todo 1 - doc for method
         new_url = self.base_url + url
 

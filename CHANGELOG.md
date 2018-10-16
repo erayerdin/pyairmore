@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+ - `DeviceService::fetch_device_detail` returns `DeviceDetail` instance
+ - `Service::request` now returns `requests.Response`
+
+### Added
+ - `DeviceService::take_screenshot` returns `Image` instance from Pillow
+ - `DeviceScreenshotProcess`
+ - `DeviceDetail`
+ 
+### Removed
+ - Properties for device detail moved from `DeviceService` to `DeviceDetail`
+
 ## [0.1.0a2] - 2018-10-16
 ### Changed
  - Travis links on readme
