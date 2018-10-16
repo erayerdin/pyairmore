@@ -63,6 +63,12 @@ sake of simplicity, we will use a service called `DeviceService`.
     device.call_history_count  # 666
     
     # so on and so forth
+    
+# Documentation
+
+You can get latest documentation from [here](https://pyairmore.readthedocs.io/)
+and you can also check out `development` branch's documentation [here](https://pyairmore.readthedocs.io/en/development/),
+which is supposed to have next release features.
 
 # Contribution
 
