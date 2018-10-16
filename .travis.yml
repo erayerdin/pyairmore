@@ -29,4 +29,4 @@ jobs:
         - pip install coverage coveralls
       script:
         - nosetests --cover-branches --with-coverage --verbose --cover-package=pyairmore
-      after_success: coveralls
+      after_success: coveralls --verbose
