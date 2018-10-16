@@ -1,6 +1,9 @@
 version: 1.0.{build}
 clone_folder: c:\project
 
+skip_commits:
+  message: /travis/
+
 environment:
   matrix:
     - PYTHON: "c:\\python35-x64"
