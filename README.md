@@ -1,5 +1,10 @@
 # PyAirmore
 
+[![PyPI](https://img.shields.io/pypi/v/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+[![PyPI - License](https://img.shields.io/pypi/l/pyairmore.svg?style=flat-square)](LICENSE.txt)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+[![PyPI - Status](https://img.shields.io/pypi/status/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+
 |             | Build | Coverage |
 |-------------|-------|----------|
 | master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](travis-ci.org/erayerdin/pyairmore)           | [![Coveralls github master](https://img.shields.io/coveralls/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
