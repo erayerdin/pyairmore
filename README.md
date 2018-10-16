@@ -5,10 +5,10 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
 [![PyPI - Status](https://img.shields.io/pypi/status/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
 
-|             | Build | Coverage |
-|-------------|-------|----------|
-| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore)           | [![Coveralls github master](https://img.shields.io/coveralls/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
-| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore) | [![Coveralls github development](https://img.shields.io/coveralls/github/erayerdin/pyairmore/development.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
+|             | Build (Linux) | Build (Windows) | Coverage |
+|-------------|---------------|-----------------|----------|
+| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore)           | [![AppVeyor master](https://img.shields.io/appveyor/ci/erayerdin/pyairmore/master.svg?style=flat-square)](https://ci.appveyor.com/project/erayerdin/pyairmore)           | [![Coveralls github master](https://img.shields.io/coveralls/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore)           |
+| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore) | [![AppVeyor development](https://img.shields.io/appveyor/ci/erayerdin/pyairmore/development.svg?style=flat-square)](https://ci.appveyor.com/project/erayerdin/pyairmore) | [![Coveralls github development](https://img.shields.io/coveralls/github/erayerdin/pyairmore/development.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
 
 PyAirmore is a Airmore client library for Android Airmore server. You can get
 information from Airmore server on your Android.
