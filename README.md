@@ -7,8 +7,8 @@
 
 |             | Build | Coverage |
 |-------------|-------|----------|
-| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](travis-ci.org/erayerdin/pyairmore)           | [![Coveralls github master](https://img.shields.io/coveralls/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
-| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square)](travis-ci.org/erayerdin/pyairmore) | [![Coveralls github development](https://img.shields.io/coveralls/github/erayerdin/pyairmore/development.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
+| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore)           | [![Coveralls github master](https://img.shields.io/coveralls/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
+| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore) | [![Coveralls github development](https://img.shields.io/coveralls/github/erayerdin/pyairmore/development.svg?style=flat-square)](https://coveralls.io/github/erayerdin/pyairmore) |
 
 PyAirmore is a Airmore client library for Android Airmore server. You can get
 information from Airmore server on your Android.
