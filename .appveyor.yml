@@ -2,8 +2,7 @@ version: 1.0.{build}
 clone_folder: c:\projects\pyairmore
 install:
 - sh: pip install -r dev.requirements.txt
-build:
-  verbosity: minimal
+build: off
 test_script:
 - sh: tox
 notifications:
