@@ -29,10 +29,10 @@ jobs:
     python: '3.6'
     install:
     - pip install -r dev.requirements.txt
-    - pip install coverage coveralls
+    - pip install coverage codecov
     script:
     - nosetests --cover-branches --with-coverage --verbose --cover-package=pyairmore
-    after_success: coveralls --verbose
+    after_success: codecov --verbose
     deploy:
       provider: pypi
       user: erayerdin
