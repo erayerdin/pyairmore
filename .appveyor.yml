@@ -1,0 +1,15 @@
+version: 1.0.{build}
+clone_folder: c:\projects\pyairmore
+install:
+- sh: pip install -r dev.requirements.txt
+build:
+  verbosity: minimal
+test_script:
+- sh: tox
+notifications:
+- provider: Email
+  to:
+  - eraygezer.94@gmail.com
+  on_build_success: false
+  on_build_failure: true
+  on_build_status_changed: true
