@@ -33,11 +33,10 @@ jobs:
     script:
     - nosetests --cover-branches --with-coverage --verbose --cover-package=pyairmore
     after_success: coveralls --verbose
-    if: branch = master
-      deploy:
-        provider: pypi
-        user: erayerdin
-        password:
-          secure: j+8lQ9Rtnnn+cf8EY6jHWsEl74rEC6ocU67VWC/hEtKC8bG7yQAx8g06ebcu3P5HaRz6WAjBmqxFOXhPtbVwxy2np3uTVV7fRb+eWTLCU1GYcV5jZzZa9EE/X6hGZHUg6uULg89H7CgBQmtoZjWt9GrYYzBCRIm95lViSc+216NPu7tjytjbxW9hTkcTu80UmKsB4aH1S9sqkhBphBOPSypjJ7i0eIWZ5k4O9fzOvOaHCO05NdwfjrG3dudovyTk1hmh6Ie7qixWfb8wgH9eC3PIy1UPAGhzCuqZN9ks7wbr2Qqb4RM6mxwF2ALdmsyRyxws+8d6MLIwXwSWW45zHR6SAL1PWIHRUbAz8TVf1Xfb/M5MYMUuIGxEY1XPzPI3aavFkiIme8GOHNBfUPZNgpRhB/kcPJ9o4cJQTFam2dRVkEprokP1/a9BF5hgSADicvWkDa7loeunHRzwab/Z7dAfnVBH59HeDL8gsX+QphTe8wvkRxzP9qgAZhZSZIRmZz30ErBye4F9fk/Ur7jssO5vm0pshDUC6xLYgZirJL+Btli+pXifXmRlrN86xXrru2LyV3Fjyn7p+Lwp0rCSdPoZNN1NlYFA3HY7SPsjnuSKag8+1cf3+ALV2GDS7DYHIhw8w/LIfkXTkvMd1y3RO1UywqBP1jGel9hB4Yskznk=
-        on:
-          tags: true
+    deploy:
+      provider: pypi
+      user: erayerdin
+      password:
+        secure: j+8lQ9Rtnnn+cf8EY6jHWsEl74rEC6ocU67VWC/hEtKC8bG7yQAx8g06ebcu3P5HaRz6WAjBmqxFOXhPtbVwxy2np3uTVV7fRb+eWTLCU1GYcV5jZzZa9EE/X6hGZHUg6uULg89H7CgBQmtoZjWt9GrYYzBCRIm95lViSc+216NPu7tjytjbxW9hTkcTu80UmKsB4aH1S9sqkhBphBOPSypjJ7i0eIWZ5k4O9fzOvOaHCO05NdwfjrG3dudovyTk1hmh6Ie7qixWfb8wgH9eC3PIy1UPAGhzCuqZN9ks7wbr2Qqb4RM6mxwF2ALdmsyRyxws+8d6MLIwXwSWW45zHR6SAL1PWIHRUbAz8TVf1Xfb/M5MYMUuIGxEY1XPzPI3aavFkiIme8GOHNBfUPZNgpRhB/kcPJ9o4cJQTFam2dRVkEprokP1/a9BF5hgSADicvWkDa7loeunHRzwab/Z7dAfnVBH59HeDL8gsX+QphTe8wvkRxzP9qgAZhZSZIRmZz30ErBye4F9fk/Ur7jssO5vm0pshDUC6xLYgZirJL+Btli+pXifXmRlrN86xXrru2LyV3Fjyn7p+Lwp0rCSdPoZNN1NlYFA3HY7SPsjnuSKag8+1cf3+ALV2GDS7DYHIhw8w/LIfkXTkvMd1y3RO1UywqBP1jGel9hB4Yskznk=
+      on:
+        tags: true
