@@ -6,20 +6,18 @@ jobs:
       python:
         - "3.5"
         - "3.6"
-        - "3.7"
       install: pip install -r dev.requirements.txt
       script: nosetests --verbose
     - stage: "Testing with Latest Stable requests"
       python:
         - "3.5"
         - "3.6"
-        - "3.7"
       install:
         - pip install -r dev.requirements.txt
         - pip install requests
       script: nosetests --verbose
     - stage: "Covering Package"
-      python: "3.7"
+      python: "3.6"
       install:
         - pip install -r dev.requirements.txt
         - pip install coverage coveralls
