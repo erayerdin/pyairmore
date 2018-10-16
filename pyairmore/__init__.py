@@ -2,7 +2,7 @@
 Pyairmore package
 """  # todo [1] package doc
 
-__version__ = "0.1.0-pre"
+__version__ = "0.1.0a1"
 __author__ = "Eray Erdin"
 
 
