@@ -7,7 +7,7 @@ __author__ = "Eray Erdin"
 
 
 class Refreshable:
-    # todo doc
+    # todo 1 - doc
 
     def refresh(self) -> None:
         raise NotImplementedError("This method needs to be overriden by children.")
