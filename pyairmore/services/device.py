@@ -172,14 +172,12 @@ class DeviceService(pyairmore.services.Service):
 
         response = self.request(DeviceScreenshotProcess)
         content = response.text
-        content = self.__purify_screenshot_base64_content(content)
 
         from io import BytesIO
         import base64
+        from pyairmore import _clean_base64_png
 
+        content = _clean_base64_png(content)
         image = PIL.Image.open(BytesIO(base64.b64decode(content)))
 
         return image
-
-    def __purify_screenshot_base64_content(self, encoded: str) -> str:
-        return encoded[22:]
