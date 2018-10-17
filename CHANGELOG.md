@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - Docstring for `request` package
    - Docstring for `AirmoreSession` class
  - Docstring for root package
+ - Docstring for `services` package
+   - Docstring for `Service` class
+   - Docstring for `Process` class
+   - Docstring for `ServerUnreachableException`
+   - Docstring for `AuthorizationException`
+
+### Changed
+ - Refactored `ServerIdleException` to `ServerUnreachableException`
 
 ## [0.1.0a9] - 2018-10-17
 ### Changed
