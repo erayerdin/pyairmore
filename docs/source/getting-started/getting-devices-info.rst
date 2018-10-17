@@ -29,4 +29,4 @@ And then you can get information from your device as such:
 
 See `DeviceService`_ for more detailed info.
 
-.. _DeviceService: /services.html#device-service
+.. _DeviceService: /services/device-service.html
