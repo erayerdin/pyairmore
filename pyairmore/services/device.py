@@ -162,7 +162,7 @@ class DeviceService(pyairmore.services.Service):
 
         return detail
 
-    def take_screenshot(self) -> PIL.Image:
+    def take_screenshot(self) -> PIL.Image.Image:
         """Takes screenshot of the target device.
 
         This method relies on ``pillow`` package. You need to install it.
