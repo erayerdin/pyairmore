@@ -132,7 +132,7 @@ class DeviceService(pyairmore.services.Service):
 
         # resolution parsing
         if "*" in data.get("Resolution", ""):
-            detail.resolution = tuple(map(lambda x: int(x), data.get("Resolution").split("*", 1)))
+            detail.resolution = tuple(map(int, data.get("Resolution").split("*", 1)))
 
         detail.is_root = False if data.get("Root", None) == 0 else True
         detail.sdk_version_id = data.get("SDKVersionID", 1)
