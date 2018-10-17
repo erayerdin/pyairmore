@@ -1,13 +1,6 @@
+"""PyAirmore (the package name of which is ``pyairmore``) is a Python client library for Android Airmore server,
+which helps the developers to take programmatic actions on Android.
 """
-Pyairmore package
-"""  # todo [1] package doc
 
 __version__ = "0.1.0a9"
 __author__ = "Eray Erdin"
-
-
-class Refreshable:
-    # todo 1 - doc
-
-    def refresh(self) -> None:
-        raise NotImplementedError("This method needs to be overriden by children.")

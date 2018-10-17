@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
  - Docstring for `request` package
    - Docstring for `AirmoreSession` class
+ - Docstring for root package
 
 ## [0.1.0a9] - 2018-10-17
 ### Changed
