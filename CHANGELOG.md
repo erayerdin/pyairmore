@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
    - Docstring for `Process` class
    - Docstring for `ServerUnreachableException`
    - Docstring for `AuthorizationException`
+ - Docstring for `services.device` package
+   - Docstring for `DeviceDetail` class
+   - Docstring for `DeviceDetailProcess`
+   - Docstring for `DeviceScreenshotProcess`
+   - Docstring for `DeviceService`
 
 ### Changed
  - Refactored `ServerIdleException` to `ServerUnreachableException`

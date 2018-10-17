@@ -1,4 +1,7 @@
-# todo 1 - package doc
+"""This module contains DeviceService which helps you get detail about target device.
+
+To use DeviceService::take_screenshot, you need to install ``pillow``.
+"""
 
 import warnings
 
@@ -17,7 +20,11 @@ import pyairmore.request
 import pyairmore.services
 
 
-class DeviceDetail:  # todo 1 - device detail class
+class DeviceDetail:
+    """A class that contains several attributes which are details about the target device.
+
+    This class is to be initialized by DeviceService.
+    """
     def __init__(self):
         self.model = None  # type: str
         self.brand = None  # type: str
@@ -64,7 +71,11 @@ class DeviceDetail:  # todo 1 - device detail class
 
 
 class DeviceDetailProcess(pyairmore.services.Process):
-    # todo 1 - class doc
+    """A process to get device detail.
+
+     | **Endpoint:** /?Key=PhoneGetDeviceInfo&IsDetail=true
+     | **Method:** POST
+    """
 
     def __init__(self, service: pyairmore.services.Service):
         super().__init__(service)
@@ -74,6 +85,11 @@ class DeviceDetailProcess(pyairmore.services.Process):
 
 
 class DeviceScreenshotProcess(pyairmore.services.Process):
+    """A process to get device detail.
+
+     | **Endpoint:** /?Key=PhoneRefreshScreen
+     | **Method:** POST
+    """
 
     def __init__(self, service: Service):
         super().__init__(service)
@@ -88,12 +104,16 @@ class DeviceScreenshotProcess(pyairmore.services.Process):
 
 
 class DeviceService(pyairmore.services.Service):
-    # todo 1 - class doc
+    """A service to get details about the target device."""
+
     def __init__(self, session: pyairmore.request.AirmoreSession):
         super().__init__(session)
 
     def fetch_device_detail(self) -> DeviceDetail:
-        # todo 1 - fetch_device_detail doc
+        """Fetches detail about the target device.
+
+        :return: Detail about the target device.
+        """
         response = self.request(DeviceDetailProcess)
         data = response.json()  # type: dict
         detail = DeviceDetail()
@@ -143,7 +163,12 @@ class DeviceService(pyairmore.services.Service):
         return detail
 
     def take_screenshot(self) -> PIL.Image:
-        # todo 1 - take_screenshot doc
+        """Takes screenshot of the target device.
+
+        This method relies on ``pillow`` package. You need to install it.
+
+        :return: Screenshot.
+        """
 
         response = self.request(DeviceScreenshotProcess)
         content = response.text
