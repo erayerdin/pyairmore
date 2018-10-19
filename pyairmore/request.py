@@ -42,7 +42,7 @@ class AirmoreSession(requests.Session):
         self.is_mocked = False
 
     @property
-    def is_server_running(self) -> bool:
+    def is_server_running(self) -> bool:  # todo 1 - review and refactor is_server_running
         """Whether the Airmore server runs or not.
 
         This property method checks and fails under the conditions below:
@@ -67,7 +67,11 @@ class AirmoreSession(requests.Session):
 
         return is_running
 
-    def request_authorization(self) -> bool:
+    @property
+    def is_authorized(self) -> bool:  # todo 1 - implement is_authorized
+        raise NotImplementedError
+
+    def request_authorization(self) -> bool:  # todo 1 - review and refactor request_authorization
         """Requests authorization from the device.
 
         This method will block the thread for 30 seconds until the authorization accepted on the device. You might
