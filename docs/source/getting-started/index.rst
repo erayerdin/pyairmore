@@ -1,4 +1,4 @@
-Getting Started
+ome pages do not appear on main navGetting Started
 ===============
 
 This section provides a quick, not detailed, way to get started ``pyairmore``.
