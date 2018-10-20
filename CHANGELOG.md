@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
  - `AirmoreSession::is_application_open` property
+ - Documentation
+   - "Session" chapter
 
 ## [0.1.0a11] - 2018-10-17
 ### Added
