@@ -27,6 +27,4 @@ And then you can get information from your device as such:
  detail.imei  # whatever your imei is
  detail.apks_total_size  # total size of all your applications
 
-See `DeviceService`_ for more detailed info.
-
-.. _DeviceService: /services/device-service.html
+See :ref:`Device Service` for more detailed info.

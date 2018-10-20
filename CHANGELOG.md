@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  prefeferably via `AirmoreSession::is_server_running` and
  `AirmoreSession::is_authorized`
  - RTD config from `setup_py_install` to `pip install`
+ - Documentation
+   - "Getting Started > Starting A Section" is simplified.
+   - "Getting Started > Getting Device's Info" refers to "Services > Device Service"
 
 ### Added
  - `AirmoreSession::is_authorized` property, which uses the same logic for
