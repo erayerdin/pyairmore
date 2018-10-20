@@ -49,8 +49,17 @@ Android.
  - Airmore server might shut down automatically when the device is sleeping/idle.
  - Airmore server might shut down automatically when the device's power is low.
 
-So you might need to check if the server is running before each request you are making to the server. An
-``AirmoreSession`` instance has a property called ``is_server_running``.
+However, there's one consistent way to see if the server is running. If the server is running, you will see a cloud
+icon in notification indicator area (very top of the device) and a persistent notification (which is unremovable) by
+Airmore that says "Tap to enter".
+
+.. figure:: /_static/media/airmore-server-running-notification.jpg
+    :alt: airmore server running notification
+    :scale: 50%
+
+    Airmore server is running.
+
+You can also programmatically check if the server is running via ``AirmoreSession::is_server_running`` property.
 
 .. automethod:: pyairmore.request.AirmoreSession.is_server_running
 
