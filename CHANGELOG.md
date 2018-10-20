@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
  - `Service::request` method's logic to check and request authorization properly,
  prefeferably via `AirmoreSession::is_server_running` and
  `AirmoreSession::is_authorized`
+ - RTD config from `setup_py_install` to `pip install`
 
 ### Added
  - `AirmoreSession::is_authorized` property, which uses the same logic for
