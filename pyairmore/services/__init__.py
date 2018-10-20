@@ -70,7 +70,10 @@ class Service:
         is_authorized = self.session.is_authorized
 
         if not is_authorized:
-            raise AuthorizationException()
+            auth_request = self.session.request_authorization()
+
+            if not auth_request:
+                raise AuthorizationException()
 
         process = process_type(self)
         process.url = self.session.base_url + process.url

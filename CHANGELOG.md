@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
  - `AirmoreSession::is_server_running` now uses socket instead of `requests`
  for faster, accurate and consistent check of Airmore server
+ - `Service::request` method's logic to check and request authorization properly,
+ prefeferably via `AirmoreSession::is_server_running` and
+ `AirmoreSession::is_authorized`
 
 ### Added
  - `AirmoreSession::is_authorized` property, which uses the same logic for
