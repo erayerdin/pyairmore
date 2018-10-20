@@ -14,6 +14,7 @@ the developers to take programmatic actions on Android.
    :caption: Contents:
 
    getting-started/index
+   session
    services/index
 
 Indices and tables
