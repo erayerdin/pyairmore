@@ -2,7 +2,7 @@
 which helps the developers to take programmatic actions on Android.
 """
 
-__version__ = "0.1.0a11"
+__version__ = "0.1.0a12"
 __author__ = "Eray Erdin"
 
 
