@@ -42,47 +42,59 @@ class AirmoreSession(requests.Session):
         self.is_mocked = False
 
     @property
-    def is_server_running(self) -> bool:  # todo 1 - review and refactor is_server_running
+    def is_server_running(self) -> bool:
         """Whether the Airmore server runs or not.
 
-        This property method checks and fails under the conditions below:
-         - The server has not been responding for 2 seconds.
-         - The server returns '"1"'. Airmore server returns this string when it is running but server not activated and
-           will not be able to accept authorization requests.
+        The server is connected via a socket connection.
 
-        :return: True if it runs.
+        :return: True if the server runs.
         """
 
-        try:
-            response = self.post("/?Key=PhoneCheckAuthorization", timeout=2)
-        except requests.exceptions.ConnectionError:
-            return False
+        if self.is_mocked:
+            return True
 
-        body = response.text  # type: str
+        import socket
+        from contextlib import closing
 
         is_running = False
-
-        if body == '"0"':  # i don't know, server returns that if it is running
-            is_running = True
+        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+            if sock.connect_ex((str(self.ip_address), self.port)) == 0:
+                is_running = True
 
         return is_running
 
     @property
-    def is_authorized(self) -> bool:  # todo 1 - implement is_authorized
-        raise NotImplementedError
+    def is_authorized(self) -> bool:
+        """Whether the session is authorized or not.
 
-    def request_authorization(self) -> bool:  # todo 1 - review and refactor request_authorization
+        :return: True if the session is authorized.
+        """
+        response = self.post("/?Key=PhoneCheckAuthorization")
+        status = response.status_code
+        body = response.text
+
+        if status != 200:
+            return False
+
+        is_authorized = False
+
+        if body == '"0"':
+            is_authorized = True
+
+        return is_authorized
+
+    def request_authorization(self) -> bool:
         """Requests authorization from the device.
 
-        This method will block the thread for 30 seconds until the authorization accepted on the device. You might
+        This method will block the thread until the authorization accepted on the device. You might
         want to utilize async if you do not want to hang your application.
 
         The authorization on device will be rejected automatically after 30 seconds.
 
-        It is better to use ``is_server_running`` property to ensure your server is running before using this
-        method.
+        Running this method before each request is a good practice since the target device will not show authorization
+        dialog if the session is already authorized.
 
-        :return: True if the authorization accepted.
+        :return: True if the authorization was accepted.
         """
 
         response = self.post("/?Key=PhoneRequestAuthorization")

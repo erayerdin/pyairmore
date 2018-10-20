@@ -19,7 +19,7 @@ class ServerUnreachableException(Exception):
     def __init__(self, service):
         message = "Server is found idle while making request for {}. The reasons might be:\n" \
                   " - You might not even have installed Airmore to your device.\n" \
-                  " - Sometimes your Airmore server goes idle for battery. You need to open it up again." \
+                  " - Sometimes your Airmore server goes idle for battery saving. You need to open it up again." \
             .format(service.__class__.__name__)
         super().__init__(message)
 
@@ -67,7 +67,7 @@ class Service:
         if not is_running:
             raise ServerUnreachableException(self)
 
-        is_authorized = self.session.request_authorization()
+        is_authorized = self.session.is_authorized
 
         if not is_authorized:
             raise AuthorizationException()

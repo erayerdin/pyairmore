@@ -1,7 +1,6 @@
 import ipaddress
-import unittest
-
 import requests_mock
+import unittest
 
 import pyairmore.request
 
@@ -50,6 +49,9 @@ class MockedAirmoreSession(unittest.TestCase):
 class AirmoreSessionTestCase(MockedAirmoreSession):
     def test_is_server_running(self):
         self.assertTrue(self.session.is_server_running)
+
+    def test_is_authorized(self):
+        self.assertTrue(self.session.is_authorized)
 
     def test_request_authorization(self):
         self.assertTrue(self.session.request_authorization())
