@@ -64,11 +64,18 @@ class AirmoreSession(requests.Session):
         return is_running
 
     @property
-    def is_authorized(self) -> bool:
-        """Whether the session is authorized or not.
+    def is_application_open(self) -> bool:
+        """Whether the application is open and front.
 
-        :return: True if the session is authorized.
+        This means the user now can see Airmore application on screen.
+
+        :return: True if the application is open and front.
         """
+        # now i know what you are thinking
+        # i don't know what these devs were thinking
+        # but, apparently, the url below checks if the application
+        # is open and user can see it
+
         response = self.post("/?Key=PhoneCheckAuthorization")
         status = response.status_code
         body = response.text
@@ -76,12 +83,12 @@ class AirmoreSession(requests.Session):
         if status != 200:
             return False
 
-        is_authorized = False
+        is_app_front = False
 
         if body == '"0"':
-            is_authorized = True
+            is_app_front = True
 
-        return is_authorized
+        return is_app_front
 
     def request_authorization(self) -> bool:
         """Requests authorization from the device.

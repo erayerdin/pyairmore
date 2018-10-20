@@ -8,17 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
  - `AirmoreSession::is_server_running` now uses socket instead of `requests`
  for faster, accurate and consistent check of Airmore server
- - `Service::request` method's logic to check and request authorization properly,
- prefeferably via `AirmoreSession::is_server_running` and
- `AirmoreSession::is_authorized`
+ - `Service::request` method's logic to check and request authorization
+ properly, prefeferably via `AirmoreSession::is_server_running` and
+ `AirmoreSession::request_authorization`
  - RTD config from `setup_py_install` to `pip install`
  - Documentation
    - "Getting Started > Starting A Section" is simplified.
    - "Getting Started > Getting Device's Info" refers to "Services > Device Service"
 
 ### Added
- - `AirmoreSession::is_authorized` property, which uses the same logic for
- old `AirmoreSession::is_server_running` property
+ - `AirmoreSession::is_application_open` property
 
 ## [0.1.0a11] - 2018-10-17
 ### Added
