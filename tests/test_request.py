@@ -50,8 +50,8 @@ class AirmoreSessionTestCase(MockedAirmoreSession):
     def test_is_server_running(self):
         self.assertTrue(self.session.is_server_running)
 
-    def test_is_authorized(self):
-        self.assertTrue(self.session.is_authorized)
+    def test_is_application_open(self):
+        self.assertTrue(self.session.is_application_open)
 
     def test_request_authorization(self):
         self.assertTrue(self.session.request_authorization())
