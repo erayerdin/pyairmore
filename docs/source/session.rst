@@ -35,9 +35,9 @@ you can pass the port as ``int``.
 
 .. note::
 
-    Remember! All aspects covered in subsections are already managed by ``Service`` objects. However, these might be
-    needed if you intend to contribute to the main project, or simply extend a functionality that you have not found in
-    the core library.
+    Remember! All aspects except `is_application_open` covered in subsections are already managed by ``Service`` objects.
+    However, these might be needed if you intend to contribute to the main project, or simply extend a functionality
+    that you have not found in the core library.
 
 Is Server Running?
 ------------------
@@ -65,8 +65,69 @@ This will return boolean ``True`` value if the server is up and running.
     ``is_server_running`` is the only method in ``AirmoreSession`` that uses built-in ``socket`` library instead of
     ``requests`` library.
 
-Is Session Authorized?
+.. warning::
+
+    All the aspects from here on assumes that ``is_server_running`` is True. So, this method is an initial step before
+    doing any session operations.
+
+Is Application Open?
 ----------------------
 
-The server is up, but that does not mean that you can do anything with it. Airmore needs authorization for further
-processing. The authorization is, as well, not very consistent.
+In some occasions, you might need to know if the target device has opened the application and the user can see Airmore
+application.
+
+.. automethod:: pyairmore.request.AirmoreSession.is_application_open
+
+You can simply do:
+
+.. code-block:: python
+
+ session.is_application_open  # True
+
+This method will return boolean ``True`` value if the user can now see Airmore application on front.
+
+.. note::
+
+    This method is not used in ``Service`` classes for validation of any kind. It only gives information about if the
+    user on target device can see Airmore main activity.
+
+Requesting Authorization
+------------------------
+
+To do anything with device, you need to request authorization first and the target device must accept it. The default
+timeout on target device is 30 seconds. So, after 30 seconds, your request will be rejected automatically.
+
+To request authorization, you use ``AirmoreSession::request_authorization`` method.
+
+.. automethod:: pyairmore.request.AirmoreSession.request_authorization
+
+To request authorization from the target device:
+
+.. code-block:: python
+
+ session.request_authorization()  # True
+
+This will show up a dialog to accept the authorization request on the device.
+
+There are some key behaviors about this method:
+
+ - When the target device is sleeping or in lock screen, you will need to unlock it
+   (if it is protected by password or PIN) to accept authorization.
+ - You can request authorization anywhere. You do not need to open up Airmore.
+ - This method will return boolean ``True`` value if the authorization has already been accepted.
+
+.. warning::
+
+    This method will block the current thread until it has a response.
+
+.. warning::
+
+    On some devices, when you request authorization when the screen is locked, and you unlock the device, the whole
+    launcher might freeze, dialog might not even show up and the launcher activity might not even accept any touch
+    event. In this case, show your recent application list and clear "Airmore".
+
+.. note::
+
+    Since ``AirmoreSession::request_authorization`` method returns ``True`` even if the authorization is accepted, you
+    can use it before every request for a safety measure, to ensure if you are authorized. ``Service`` classes already
+    use this method.
