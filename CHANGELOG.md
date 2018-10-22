@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
  - ModuleNotFoundError: No module named 'pyairmore.services' | [#9](https://github.com/erayerdin/pyairmore/issues/9)
+ - Cache Travis Dependencies | [#11](https://github.com/erayerdin/pyairmore/issues/11)
 
 ## [0.1.0a12] - 2018-10-20
 ### Changed

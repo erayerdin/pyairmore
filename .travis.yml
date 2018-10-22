@@ -1,4 +1,6 @@
 language: python
+cache: pip
+
 if: commit_message !~ /appveyor/
 jobs:
   include:
