@@ -19,13 +19,13 @@ jobs:
     python: '3.5'
     install:
     - pip install -r dev.requirements.txt
-    - pip install requests
+    - pip install requests --upgrade
     script: nosetests --verbose
   - stage: Testing with Latest Stable requests (Python 3.6)
     python: '3.6'
     install:
     - pip install -r dev.requirements.txt
-    - pip install requests
+    - pip install requests --upgrade
     script: nosetests --verbose
   - stage: Covering Package
     python: '3.6'
