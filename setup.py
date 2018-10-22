@@ -1,7 +1,4 @@
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
 import pyairmore
 
@@ -19,7 +16,10 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/erayerdin/pyairmore",
     download_url="https://github.com/erayerdin/exceptive/archive/master.zip",
-    packages=["pyairmore"],
+    packages=[
+        "pyairmore",
+        "pyairmore.services"
+    ],
     include_package_data=True,
     keywords="python android airmore pyairmore",
     classifiers=[
