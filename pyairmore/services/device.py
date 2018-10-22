@@ -7,10 +7,9 @@ import warnings
 
 from pyairmore.services import Service
 
-try:
-    import PIL
-    import PIL.Image
-except ImportError:
+import importlib.util
+
+if not importlib.util.find_spec("PIL"):
     warnings.warn("In order to use DeviceService::take_screenshot, you will need 'pillow' module to be installed.",
                   ImportWarning)
 
@@ -162,13 +161,14 @@ class DeviceService(pyairmore.services.Service):
 
         return detail
 
-    def take_screenshot(self) -> PIL.Image.Image:
+    def take_screenshot(self) -> "PIL.Image.Image":
         """Takes screenshot of the target device.
 
         This method relies on ``pillow`` package. You need to install it.
 
         :return: Screenshot.
         """
+        import PIL.Image
 
         response = self.request(DeviceScreenshotProcess)
         content = response.text
