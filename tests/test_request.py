@@ -1,5 +1,4 @@
 import ipaddress
-import requests_mock
 import unittest
 
 import pyairmore.request
