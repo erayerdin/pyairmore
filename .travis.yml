@@ -7,6 +7,8 @@ jobs:
   - stage: Testing with Specified requests (Python 3.5)
     python: '3.5'
     install: pip install -r dev.requirements.txt
+    before_script:
+      - python tests/server.py &
     script: nosetests --verbose
   - stage: Testing with Specified requests (Python 3.6)
     python: '3.6'
@@ -14,24 +16,32 @@ jobs:
     - linux
     - osx
     install: pip install -r dev.requirements.txt
+    before_script:
+      - python tests/server.py &
     script: nosetests --verbose
   - stage: Testing with Latest Stable requests (Python 3.5)
     python: '3.5'
     install:
     - pip install -r dev.requirements.txt
     - pip install requests --upgrade
+    before_script:
+      - python tests/server.py &
     script: nosetests --verbose
   - stage: Testing with Latest Stable requests (Python 3.6)
     python: '3.6'
     install:
     - pip install -r dev.requirements.txt
     - pip install requests --upgrade
+    before_script:
+      - python tests/server.py &
     script: nosetests --verbose
   - stage: Covering Package
     python: '3.6'
     install:
     - pip install -r dev.requirements.txt
     - pip install coverage codecov
+    before_script:
+      - python tests/server.py &
     script:
     - nosetests --cover-branches --with-coverage --verbose --cover-package=pyairmore
     after_success: codecov --verbose
