@@ -1,0 +1,6 @@
+pyairmore test server.
+
+Paths
+=====
+ - /?Key=PhoneCheckAuthorization
+ - /?Key=PhoneRequestAuthorization
