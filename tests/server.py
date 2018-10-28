@@ -11,6 +11,11 @@ def get_device_info() -> Response:
         return Response(f.read(), mimetype="text/plain")
 
 
+def refresh_screen() -> Response:
+    with open("resources/test/screenshot.txt", "r") as f:
+        return Response(f.read(), mimetype="text/plain")
+
+
 @app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
@@ -21,7 +26,8 @@ def path():
     responses = (
         ("PhoneCheckAuthorization", lambda: Response('"0"', mimetype="text/plain")),
         ("PhoneRequestAuthorization", lambda: Response("true", mimetype="text/plain")),
-        ("PhoneGetDeviceInfo", get_device_info)
+        ("PhoneGetDeviceInfo", get_device_info),
+        ("PhoneRefreshScreen", refresh_screen)
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
