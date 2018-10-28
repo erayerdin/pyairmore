@@ -1,44 +1,20 @@
 import collections
+import ipaddress
+import unittest
 
+from pyairmore.request import AirmoreSession
 from pyairmore.services.device import DeviceService
-from tests.test_request import MockedAirmoreSession
 
-class MockedDeviceService(MockedAirmoreSession):
+
+class DeviceDetailTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.session = AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
         cls.service = DeviceService(cls.session)
 
-    @classmethod
-    def _mount(cls):
-        super()._mount()
-        cls.__mount_phone_get_device_info_detailed()
-        cls.__mount_phone_refresh_screen()
-
-    @classmethod
-    def __mount_phone_get_device_info_detailed(cls):
-        with open("resources/test/device_detail.txt", "r") as f:
-            response = f.read()
-
-        cls.adapter.register_uri(
-            "POST",
-            "/?Key=PhoneGetDeviceInfo&IsDetail=true",
-            text=response
-        )
-
-    @classmethod
-    def __mount_phone_refresh_screen(cls):
-        with open("resources/test/screenshot.txt", "r") as f:
-            response = f.read()
-
-        cls.adapter.register_uri(
-            "POST",
-            "/?Key=PhoneRefreshScreen",
-            text=response
-        )
-
-
-class DeviceDetailTestCase(MockedDeviceService):
     def setUp(self):
         self.detail = self.service.fetch_device_detail()
 
@@ -156,6 +132,14 @@ class DeviceDetailTestCase(MockedDeviceService):
         self.assertEqual(power, 0.85)
 
 
-class DeviceScreenshotTestCase(MockedDeviceService):
+class DeviceScreenshotTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.service = DeviceService(cls.session)
+
     def test_valid_image(self):
         self.image = self.service.take_screenshot()  # will fail if not valid image

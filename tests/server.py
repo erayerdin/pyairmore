@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 
+import typing
 from flask import Flask, jsonify, request, Response
 
 app = Flask(__name__)
 
 
-@app.route('/')
+def get_device_info() -> Response:
+    with open("resources/test/device_detail.txt", "r") as f:
+        return Response(f.read(), mimetype="text/plain")
+
+
+@app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
 
@@ -13,9 +19,10 @@ def path():
         default_response = f.read()
 
     responses = (
-        ("ResponseCheckAuthorization", lambda: Response('"0"', mimetype="text/plain")),
-        ("PhoneRequestAuthorization", lambda: Response("true", mimetype="text/plain"))
-    )
+        ("PhoneCheckAuthorization", lambda: Response('"0"', mimetype="text/plain")),
+        ("PhoneRequestAuthorization", lambda: Response("true", mimetype="text/plain")),
+        ("PhoneGetDeviceInfo", get_device_info)
+    )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
         if arg == response[0]:

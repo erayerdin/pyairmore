@@ -4,3 +4,4 @@ Paths
 =====
  - /?Key=PhoneCheckAuthorization
  - /?Key=PhoneRequestAuthorization
+ - /?Key=PhoneGetDeviceInfo&IsDetail=true
