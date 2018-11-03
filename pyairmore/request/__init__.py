@@ -4,31 +4,46 @@ to an Airmore server.
 """
 import ipaddress
 
-import requests
 import requests.exceptions
 
 
+class AirmoreRequest(requests.PreparedRequest):
+    # todo 1 - class doc
+
+    def __init__(self, session: "AirmoreSession"):
+        super().__init__()
+        self.__session = session  # type: AirmoreSession
+        self.prepare_method(None)
+
+    def prepare_method(self, method):
+        # todo 2 - method doc
+
+        self.method = "POST"
+
+    def prepare_url(self, url, params):
+        # todo 2 - method doc
+
+        super().prepare_url(self.__session.base_url+url, params)
+
+
+class ApplicationOpenRequest(AirmoreRequest):
+    # todo 1 - class doc
+
+    def __init__(self, session: "AirmoreSession"):
+        super().__init__(session)
+        self.prepare_url("/", {"Key": "PhoneCheckAuthorization"})
+
+
+class AuthorizationRequest(AirmoreRequest):
+    # todo 1 - class doc
+
+    def __init__(self, session: "AirmoreSession"):
+        super().__init__(session)
+        self.prepare_url("/", {"Key": "PhoneRequestAuthorization"})
+
+
 class AirmoreSession(requests.Session):
-    """``AirmoreSession`` extends ``requests.Session`` in order to manage an Airmore session.
-
-    **Instance Attributes**
-     - **ip_address: ipaddress.IPv4Address** -- IP address to connect to.
-     - **port: int** -- Port to connect to.
-     - **is_mocked: bool** -- Whether the connection is mocked. It is utilized in unit-tests.
-
-    **Notes**
-
-    An ``AirmoreSession`` instance will manage URLs differently. It uses its ``ip_address`` and ``port`` to prefix a
-    custom URL on each request. Such as::
-
-     >>> from ipaddress import IPv4Address
-     >>> session = AirmoreSession(IPv4Address("127.0.0.1"))
-     >>> session.get("/whatever")
-
-    will use the url below to make request::
-
-     >>> "http://127.0.0.1:2333/whatever"
-    """
+    """``AirmoreSession`` extends ``requests.Session`` in order to manage an Airmore session."""
 
     def __init__(self, ip_address: ipaddress.IPv4Address, port: int = 2333):
         """
@@ -39,7 +54,6 @@ class AirmoreSession(requests.Session):
 
         self.ip_address = ip_address  # type: ipaddress.IPv4Address
         self.port = port  # type: int
-        self.is_mocked = False
 
     @property
     def is_server_running(self) -> bool:
@@ -49,9 +63,6 @@ class AirmoreSession(requests.Session):
 
         :return: True if the server runs.
         """
-
-        if self.is_mocked:
-            return True
 
         import socket
         from contextlib import closing
@@ -76,7 +87,8 @@ class AirmoreSession(requests.Session):
         # but, apparently, the url below checks if the application
         # is open and user can see it
 
-        response = self.post("/?Key=PhoneCheckAuthorization")
+        request = ApplicationOpenRequest(self)
+        response = self.send(request)
         status = response.status_code
         body = response.text
 
@@ -104,7 +116,8 @@ class AirmoreSession(requests.Session):
         :return: True if the authorization was accepted.
         """
 
-        response = self.post("/?Key=PhoneRequestAuthorization")
+        request = AuthorizationRequest(self)
+        response = self.send(request)
 
         is_accepted = False
 
@@ -116,6 +129,8 @@ class AirmoreSession(requests.Session):
     def request(self, method, url, params=None, data=None, headers=None, cookies=None, files=None, auth=None,
                 timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None,
                 json=None) -> requests.Response:
+        # todo 2 - method doc
+
         new_url = self.base_url + url
 
         return super().request(method, new_url, params, data, headers, cookies, files, auth, timeout, allow_redirects,
@@ -123,21 +138,17 @@ class AirmoreSession(requests.Session):
 
     @property
     def base_url(self) -> str:
-        """Constructs a base url (prefix) for any request.
-
-        If ``is_mocked`` attribute is ``True``, then it will construct on ``mock`` protocol instead of ``http``.
+        """Constructs a base url (prefix) for any AirmoreRequest.
 
         :return: A base url for internal requests.
         """
 
         prefix = "http"
 
-        if self.is_mocked:
-            prefix = "mock"
-
         return "{}://{}:{}".format(prefix, self.ip_address, self.port)
 
 
 __all__ = [
     "AirmoreSession",
+    "AirmoreRequest"
 ]
