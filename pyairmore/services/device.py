@@ -89,6 +89,8 @@ class DeviceService(pyairmore.services.Service):
 
         :return: Detail about the target device.
         """
+        self.session.request_authorization()
+
         request = DeviceDetailsRequest(self.session)
         response = self.session.send(request)
         data = response.json()  # type: dict
@@ -145,6 +147,8 @@ class DeviceService(pyairmore.services.Service):
 
         :return: Screenshot.
         """
+        self.session.request_authorization()
+
         import PIL.Image
 
         request = DeviceScreenshotRequest(self.session)
