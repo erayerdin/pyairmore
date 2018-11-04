@@ -2,6 +2,7 @@ site_name: PyAirmore
 site_author: Eray Erdin
 repo_url: https://github.com/erayerdin/pyairmore
 theme: readthedocs
+google_analytics: UA-128604085-1
 nav:
   - index.md
   - Requesting and Session:
