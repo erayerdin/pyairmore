@@ -1,0 +1,6 @@
+site_name: PyAirmore
+site_author: Eray Erdin
+repo_url: https://github.com/erayerdin/pyairmore
+theme: readthedocs
+nav:
+  - index.md

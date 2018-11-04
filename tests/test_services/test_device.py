@@ -16,7 +16,7 @@ class DeviceDetailRequestTestCase(unittest.TestCase):
         cls.service = pyairmore.services.device.DeviceService(cls.session)
 
     def setUp(self):
-        self.detail = self.service.fetch_device_detail()
+        self.detail = self.service.fetch_device_details()
 
     def test_model(self):
         self.assertEqual(self.detail.model, "GM 5 Plus")

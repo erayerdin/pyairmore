@@ -85,7 +85,7 @@ class DeviceService(pyairmore.services.Service):
     def __init__(self, session: pyairmore.request.AirmoreSession):
         super().__init__(session)
 
-    def fetch_device_detail(self) -> DeviceDetails:
+    def fetch_device_details(self) -> DeviceDetails:
         """Fetches detail about the target device.
 
         :return: Detail about the target device.
