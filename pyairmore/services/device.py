@@ -1,4 +1,5 @@
-# todo 1 - package doc
+"""Service and utilities related to device aspect."""
+
 import typing
 
 import pyairmore.services
@@ -89,8 +90,6 @@ class DeviceService(pyairmore.services.Service):
 
         :return: Detail about the target device.
         """
-        self.session.request_authorization()
-
         request = DeviceDetailsRequest(self.session)
         response = self.session.send(request)
         data = response.json()  # type: dict
@@ -147,8 +146,6 @@ class DeviceService(pyairmore.services.Service):
 
         :return: Screenshot.
         """
-        self.session.request_authorization()
-
         import PIL.Image
 
         request = DeviceScreenshotRequest(self.session)
@@ -163,3 +160,6 @@ class DeviceService(pyairmore.services.Service):
         image = PIL.Image.open(BytesIO(base64.b64decode(content)))
 
         return image
+
+
+__all__ = ["DeviceService"]

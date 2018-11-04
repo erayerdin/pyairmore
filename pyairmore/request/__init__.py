@@ -1,14 +1,16 @@
 """
-``request`` module contains some classes extending another classes from ``requests`` package to make easier requests
+``request`` package contains some classes extending another classes from ``requests`` package to make easier requests
 to an Airmore server.
 """
+import typing
+
 import ipaddress
 
 import requests.exceptions
 
 
 class AirmoreRequest(requests.PreparedRequest):
-    # todo 1 - class doc
+    """A PreparedRequest for Airmore server."""
 
     def __init__(self, session: "AirmoreSession"):
         super().__init__()
@@ -16,18 +18,27 @@ class AirmoreRequest(requests.PreparedRequest):
         self.prepare_method(None)
 
     def prepare_method(self, method):
-        # todo 2 - method doc
+        """Will generate "POST" no matter what."""
 
         self.method = "POST"
 
     def prepare_url(self, url, params):
-        # todo 2 - method doc
+        """URL will have ``self._session.base_url``. Only path should be provided. For example::
+
+            prepare_url("/foo", {"bar":"baz"})
+
+        will provide::
+
+            self.url  # http://host:port/foo?bar=baz
+
+        depending on your ``self.__session``.
+        """
 
         super().prepare_url(self.__session.base_url+url, params)
 
 
 class ApplicationOpenRequest(AirmoreRequest):
-    # todo 1 - class doc
+    """A request to check if application is open."""
 
     def __init__(self, session: "AirmoreSession"):
         super().__init__(session)
@@ -35,7 +46,7 @@ class ApplicationOpenRequest(AirmoreRequest):
 
 
 class AuthorizationRequest(AirmoreRequest):
-    # todo 1 - class doc
+    """A request to request application or check if the session is already authorized."""
 
     def __init__(self, session: "AirmoreSession"):
         super().__init__(session)
@@ -117,7 +128,7 @@ class AirmoreSession(requests.Session):
         """
 
         request = AuthorizationRequest(self)
-        response = self.send(request)
+        response = self.send(request, False)
 
         is_accepted = False
 
@@ -126,19 +137,22 @@ class AirmoreSession(requests.Session):
 
         return is_accepted
 
-    def request(self, method, url, params=None, data=None, headers=None, cookies=None, files=None, auth=None,
-                timeout=None, allow_redirects=True, proxies=None, hooks=None, stream=None, verify=None, cert=None,
-                json=None) -> requests.Response:
-        # todo 2 - method doc
+    def send(self, request: AirmoreRequest,
+             force_authorize: bool = True, force_connectivity_check: bool = True, **kwargs) -> requests.Response:
+        """Sending request with an ``AirmoreRequest``."""
 
-        self.request_authorization()
+        if force_authorize:
+            is_authorized = self.request_authorization()
 
-        new_url = self.base_url + url
+            if not is_authorized:
+                raise AuthorizationException()
 
-        return super().request(method, new_url, params, data, headers, cookies, files, auth, timeout, allow_redirects,
-                               proxies, hooks, stream, verify, cert, json)
+        if force_connectivity_check:
+            is_connectivity_present = self.is_server_running
 
-    def send(self, request, **kwargs):
+            if not is_connectivity_present:
+                raise AuthorizationException()
+
         return super().send(request, **kwargs)
 
     @property
@@ -148,15 +162,7 @@ class AirmoreSession(requests.Session):
         :return: A base url for internal requests.
         """
 
-        prefix = "http"
-
-        return "{}://{}:{}".format(prefix, self.ip_address, self.port)
-
-
-__all__ = [
-    "AirmoreSession",
-    "AirmoreRequest"
-]
+        return "http://{}:{}".format(self.ip_address, self.port)
 
 
 class ServerUnreachableException(Exception):
@@ -166,11 +172,10 @@ class ServerUnreachableException(Exception):
      - Airmore server is idle on target session.
     """
 
-    def __init__(self, service):
-        message = "Server is found idle while making request for {}. The reasons might be:\n" \
+    def __init__(self):
+        message = "Server is found idle. The reasons might be:\n" \
                   " - You might not even have installed Airmore to your device.\n" \
-                  " - Sometimes your Airmore server goes idle for battery saving. You need to open it up again." \
-            .format(service.__class__.__name__)
+                  " - Sometimes your Airmore server goes idle for battery saving. You need to open it up again."
         super().__init__(message)
 
 
@@ -180,5 +185,11 @@ class AuthorizationException(Exception):
     """
 
     def __init__(self):
-        message = "You are not authorized for this session. Please accept authorization on target device."
+        message = "Could not authorize. Please accept authorization on target device."
         super().__init__(message)
+
+
+__all__ = [
+    "AirmoreSession",
+    "AirmoreRequest"
+]

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
  - All tests to test server
+ - API from ground up
 
 ## [0.1.0a13] - 2018-10-22
 ### Fixed
