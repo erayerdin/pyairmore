@@ -55,7 +55,6 @@ class DeviceDetailsRequest(pyairmore.request.AirmoreRequest):
     """A request to get device detail.
 
      | **Endpoint:** /?Key=PhoneGetDeviceInfo&IsDetail=true
-     | **Method:** POST
     """
 
     def __init__(self, session: pyairmore.request.AirmoreSession):
@@ -68,10 +67,9 @@ class DeviceDetailsRequest(pyairmore.request.AirmoreRequest):
 
 
 class DeviceScreenshotRequest(pyairmore.request.AirmoreRequest):
-    """A process to get device detail.
+    """A request to get device detail.
 
      | **Endpoint:** /?Key=PhoneRefreshScreen
-     | **Method:** POST
     """
 
     def __init__(self, session: pyairmore.request.AirmoreSession):

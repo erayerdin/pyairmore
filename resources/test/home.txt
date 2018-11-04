@@ -6,3 +6,4 @@ Paths
  - /?Key=PhoneRequestAuthorization
  - /?Key=PhoneGetDeviceInfo&IsDetail=true
  - /?Key=PhoneRefreshScreen
+ - /?Key=MessageGetLatest

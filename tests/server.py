@@ -16,6 +16,11 @@ def refresh_screen() -> Response:
         return Response(f.read(), mimetype="text/plain")
 
 
+def message_get_latest() -> Response:
+    with open("resources/test/message_get_latest.txt", "r") as f:
+        return Response(f.read(), mimetype="text/plain")
+
+
 @app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
@@ -29,7 +34,8 @@ def path():
         ("PhoneRequestAuthorization",
          lambda: Response("true", mimetype="text/plain")),
         ("PhoneGetDeviceInfo", get_device_info),
-        ("PhoneRefreshScreen", refresh_screen)
+        ("PhoneRefreshScreen", refresh_screen),
+        ("MessageGetLatest", message_get_latest),
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
