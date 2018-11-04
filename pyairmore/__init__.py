@@ -4,7 +4,7 @@ programmatic actions on Android. """
 
 import pyairmore.request
 
-__version__ = "0.1.0a13"
+__version__ = "0.1.1a1"
 __author__ = "Eray Erdin"
 
 

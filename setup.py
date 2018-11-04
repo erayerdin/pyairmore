@@ -21,6 +21,7 @@ setup(
         "pyairmore",
         "pyairmore.services"
     ],
+    scripts=["bin/pyairmore"],
     include_package_data=True,
     keywords="python android airmore pyairmore",
     classifiers=[
