@@ -13,7 +13,9 @@ and manage your Android device. With PyAirmore, you can:
  
 ## License
 
-`pyairmore` is licensed under Apache Software License 2.0. [See the license](../LICENSE.txt).
+`pyairmore` is licensed under Apache Software License 2.0. [See the license][license].
+
+[license]: https://github.com/erayerdin/pyairmore/blob/master/LICENSE.txt
 
 ## Requirements
 
@@ -23,7 +25,9 @@ Also, `pyairmore` uses `requests` to handle request-response cycle between
 you (client) and Airmore server.
 
  > #### Tip
- > If you want to develop `pyairmore`, [see development requirements](../dev.requirements.txt).
+ > If you want to develop `pyairmore`, [see development requirements][dev_requirements].
+ 
+[dev_requirements]: https://github.com/erayerdin/pyairmore/blob/master/dev.requirements.txt
 
 ## Installation
 
@@ -84,5 +88,6 @@ Then you can get details about your device:
 You can check out [services](services/) to see what you can do with Airmore
 server.
 
-If you intend to develop, you might also want to see [how sessions work](sessions/),
-check *todos* or watch issues.
+If you intend to develop, you might also want to see
+[how requesting and sessions work](requesting-and-session/), check *todos* or
+watch issues.

@@ -141,16 +141,16 @@ class AirmoreSession(requests.Session):
              force_authorize: bool = True, force_connectivity_check: bool = True, **kwargs) -> requests.Response:
         """Sending request with an ``AirmoreRequest``."""
 
-        if force_authorize:
-            is_authorized = self.request_authorization()
-
-            if not is_authorized:
-                raise AuthorizationException()
-
         if force_connectivity_check:
             is_connectivity_present = self.is_server_running
 
             if not is_connectivity_present:
+                raise ServerUnreachableException()
+
+        if force_authorize:
+            is_authorized = self.request_authorization()
+
+            if not is_authorized:
                 raise AuthorizationException()
 
         return super().send(request, **kwargs)
