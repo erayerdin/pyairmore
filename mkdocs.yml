@@ -8,3 +8,6 @@ nav:
       - requesting-and-session/index.md
       - requesting-and-session/custom-requests.md
       - requesting-and-session/how-session-works.md
+  - Services:
+      - services/index.md
+      - services/device-service.md
