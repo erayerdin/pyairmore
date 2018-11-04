@@ -131,10 +131,15 @@ class AirmoreSession(requests.Session):
                 json=None) -> requests.Response:
         # todo 2 - method doc
 
+        self.request_authorization()
+
         new_url = self.base_url + url
 
         return super().request(method, new_url, params, data, headers, cookies, files, auth, timeout, allow_redirects,
                                proxies, hooks, stream, verify, cert, json)
+
+    def send(self, request, **kwargs):
+        return super().send(request, **kwargs)
 
     @property
     def base_url(self) -> str:
@@ -152,3 +157,28 @@ __all__ = [
     "AirmoreSession",
     "AirmoreRequest"
 ]
+
+
+class ServerUnreachableException(Exception):
+    """
+    This exception is thrown when:
+     - No Airmore server was found on target session.
+     - Airmore server is idle on target session.
+    """
+
+    def __init__(self, service):
+        message = "Server is found idle while making request for {}. The reasons might be:\n" \
+                  " - You might not even have installed Airmore to your device.\n" \
+                  " - Sometimes your Airmore server goes idle for battery saving. You need to open it up again." \
+            .format(service.__class__.__name__)
+        super().__init__(message)
+
+
+class AuthorizationException(Exception):
+    """
+    This exception is thrown when the authorization is rejected by the device.
+    """
+
+    def __init__(self):
+        message = "You are not authorized for this session. Please accept authorization on target device."
+        super().__init__(message)

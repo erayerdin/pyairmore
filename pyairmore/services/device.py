@@ -1,29 +1,13 @@
-"""This module contains DeviceService which helps you get detail about target device.
-
-To use DeviceService::take_screenshot, you need to install ``pillow``.
-"""
-
-import warnings
-
-from pyairmore.services import Service
-
-import importlib.util
-
-if not importlib.util.find_spec("PIL"):
-    warnings.warn("In order to use DeviceService::take_screenshot, you will need 'pillow' module to be installed.",
-                  ImportWarning)
-
+# todo 1 - package doc
 import typing
 
-import pyairmore.request
 import pyairmore.services
+import pyairmore.request
 
 
-class DeviceDetail:
-    """A class that contains several attributes which are details about the target device.
+class DeviceDetails:
+    """A class that contains several attributes which are details about the target device."""
 
-    This class is to be initialized by DeviceService.
-    """
     def __init__(self):
         self.model = None  # type: str
         self.brand = None  # type: str
@@ -64,42 +48,34 @@ class DeviceDetail:
         self.system_apks_count = 0  # type: int
         self.user_apks_count = 0  # type: int
 
-#############
-# Processes #
-#############
 
-
-class DeviceDetailProcess(pyairmore.services.Process):
-    """A process to get device detail.
+class DeviceDetailsRequest(pyairmore.request.AirmoreRequest):
+    """A request to get device detail.
 
      | **Endpoint:** /?Key=PhoneGetDeviceInfo&IsDetail=true
      | **Method:** POST
     """
 
-    def __init__(self, service: pyairmore.services.Service):
-        super().__init__(service)
+    def __init__(self, session: pyairmore.request.AirmoreSession):
+        super().__init__(session)
 
-        self.url = "/?Key=PhoneGetDeviceInfo&IsDetail=true"
-        self.method = "POST"
+        self.prepare_url("/", {
+            "Key": "PhoneGetDeviceInfo",
+            "IsDetail": "true"
+        })
 
 
-class DeviceScreenshotProcess(pyairmore.services.Process):
+class DeviceScreenshotRequest(pyairmore.request.AirmoreRequest):
     """A process to get device detail.
 
      | **Endpoint:** /?Key=PhoneRefreshScreen
      | **Method:** POST
     """
 
-    def __init__(self, service: Service):
-        super().__init__(service)
+    def __init__(self, session: pyairmore.request.AirmoreSession):
+        super().__init__(session)
 
-        self.url = "/?Key=PhoneRefreshScreen"
-        self.method = "POST"
-
-
-############
-# Services #
-############
+        self.prepare_url("/", {"Key": "PhoneRefreshScreen"})
 
 
 class DeviceService(pyairmore.services.Service):
@@ -108,14 +84,15 @@ class DeviceService(pyairmore.services.Service):
     def __init__(self, session: pyairmore.request.AirmoreSession):
         super().__init__(session)
 
-    def fetch_device_detail(self) -> DeviceDetail:
+    def fetch_device_detail(self) -> DeviceDetails:
         """Fetches detail about the target device.
 
         :return: Detail about the target device.
         """
-        response = self.request(DeviceDetailProcess)
+        request = DeviceDetailsRequest(self.session)
+        response = self.session.send(request)
         data = response.json()  # type: dict
-        detail = DeviceDetail()
+        detail = DeviceDetails()
 
         detail.model = data.get("Model", None)
         detail.brand = data.get("Brand", None)
@@ -170,7 +147,8 @@ class DeviceService(pyairmore.services.Service):
         """
         import PIL.Image
 
-        response = self.request(DeviceScreenshotProcess)
+        request = DeviceScreenshotRequest(self.session)
+        response = self.session.send(request)
         content = response.text
 
         from io import BytesIO

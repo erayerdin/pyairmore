@@ -2,18 +2,18 @@ import collections
 import ipaddress
 import unittest
 
-from pyairmore.request import AirmoreSession
-from pyairmore.services.device import DeviceService
+import pyairmore.request
+import pyairmore.services.device
 
 
-class DeviceDetailTestCase(unittest.TestCase):
+class DeviceDetailRequestTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.session = AirmoreSession(
+        cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.service = DeviceService(cls.session)
+        cls.service = pyairmore.services.device.DeviceService(cls.session)
 
     def setUp(self):
         self.detail = self.service.fetch_device_detail()
@@ -132,14 +132,14 @@ class DeviceDetailTestCase(unittest.TestCase):
         self.assertEqual(power, 0.85)
 
 
-class DeviceScreenshotTestCase(unittest.TestCase):
+class DeviceScreenshotRequestTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.session = AirmoreSession(
+        cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.service = DeviceService(cls.session)
+        cls.service = pyairmore.services.device.DeviceService(cls.session)
 
     def test_valid_image(self):
         self.image = self.service.take_screenshot()  # will fail if not valid image
