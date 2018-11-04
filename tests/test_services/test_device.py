@@ -142,4 +142,5 @@ class DeviceScreenshotRequestTestCase(unittest.TestCase):
         cls.service = pyairmore.services.device.DeviceService(cls.session)
 
     def test_valid_image(self):
-        self.image = self.service.take_screenshot()  # will fail if not valid image
+        self.image = self.service.take_screenshot()
+        # will fail if not valid image

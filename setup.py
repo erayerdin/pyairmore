@@ -11,7 +11,8 @@ with open("requirements.txt", "r") as f:
 setup(
     name="pyairmore",
     version=pyairmore.__version__,
-    description="PyAirmore is a communication layer between an Android Airmore server and the client.",
+    description="PyAirmore is a communication layer between an Android Airmore"
+                " server and the client.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/erayerdin/pyairmore",

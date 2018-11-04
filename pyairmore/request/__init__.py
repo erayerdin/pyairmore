@@ -1,7 +1,5 @@
-"""
-``request`` package contains some classes extending another classes from ``requests`` package to make easier requests
-to an Airmore server.
-"""
+"""``request`` package contains some classes extending another classes from
+``requests`` package to make easier requests to an Airmore server. """
 import typing
 
 import ipaddress
@@ -23,7 +21,8 @@ class AirmoreRequest(requests.PreparedRequest):
         self.method = "POST"
 
     def prepare_url(self, url, params):
-        """URL will have ``self._session.base_url``. Only path should be provided. For example::
+        """URL will have ``self._session.base_url``. Only path should be
+        provided. For example::
 
             prepare_url("/foo", {"bar":"baz"})
 
@@ -46,7 +45,8 @@ class ApplicationOpenRequest(AirmoreRequest):
 
 
 class AuthorizationRequest(AirmoreRequest):
-    """A request to request application or check if the session is already authorized."""
+    """A request to request application or check if the session is already
+    authorized."""
 
     def __init__(self, session: "AirmoreSession"):
         super().__init__(session)
@@ -54,7 +54,8 @@ class AuthorizationRequest(AirmoreRequest):
 
 
 class AirmoreSession(requests.Session):
-    """``AirmoreSession`` extends ``requests.Session`` in order to manage an Airmore session."""
+    """``AirmoreSession`` extends ``requests.Session`` in order to manage an
+    Airmore session. """
 
     def __init__(self, ip_address: ipaddress.IPv4Address, port: int = 2333):
         """
@@ -79,7 +80,8 @@ class AirmoreSession(requests.Session):
         from contextlib import closing
 
         is_running = False
-        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM))\
+                as sock:
             if sock.connect_ex((str(self.ip_address), self.port)) == 0:
                 is_running = True
 
@@ -116,13 +118,16 @@ class AirmoreSession(requests.Session):
     def request_authorization(self) -> bool:
         """Requests authorization from the device.
 
-        This method will block the thread until the authorization accepted on the device. You might
-        want to utilize async if you do not want to hang your application.
+        This method will block the thread until the authorization accepted
+        on the device. You might want to utilize async if you do not want to
+        hang your application.
 
-        The authorization on device will be rejected automatically after 30 seconds.
+        The authorization on device will be rejected automatically after 30
+        seconds.
 
-        Running this method before each request is a good practice since the target device will not show authorization
-        dialog if the session is already authorized.
+        Running this method before each request is a good practice since the
+        target device will not show authorization dialog if the session is
+        already authorized.
 
         :return: True if the authorization was accepted.
         """
@@ -138,7 +143,9 @@ class AirmoreSession(requests.Session):
         return is_accepted
 
     def send(self, request: AirmoreRequest,
-             force_authorize: bool = True, force_connectivity_check: bool = True, **kwargs) -> requests.Response:
+             force_authorize: bool = True,
+             force_connectivity_check: bool = True,
+             **kwargs) -> requests.Response:
         """Sending request with an ``AirmoreRequest``."""
 
         if force_connectivity_check:
@@ -173,9 +180,11 @@ class ServerUnreachableException(Exception):
     """
 
     def __init__(self):
-        message = "Server is found idle. The reasons might be:\n" \
-                  " - You might not even have installed Airmore to your device.\n" \
-                  " - Sometimes your Airmore server goes idle for battery saving. You need to open it up again."
+        message = "Server is found idle. The reasons might be:\n"\
+                  "- You might not even have installed Airmore to your "\
+                  "device.\n"\
+                  "- Sometimes your Airmore server goes idle for battery "\
+                  "saving. You need to open it up again. "
         super().__init__(message)
 
 
@@ -185,7 +194,8 @@ class AuthorizationException(Exception):
     """
 
     def __init__(self):
-        message = "Could not authorize. Please accept authorization on target device."
+        message = "Could not authorize. Please accept authorization on " \
+                  "target device. "
         super().__init__(message)
 
 

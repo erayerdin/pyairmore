@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import typing
-from flask import Flask, jsonify, request, Response
+from flask import Flask, request, Response
 
 app = Flask(__name__)
 
@@ -24,8 +24,10 @@ def path():
         default_response = f.read()
 
     responses = (
-        ("PhoneCheckAuthorization", lambda: Response('"0"', mimetype="text/plain")),
-        ("PhoneRequestAuthorization", lambda: Response("true", mimetype="text/plain")),
+        ("PhoneCheckAuthorization",
+         lambda: Response('"0"', mimetype="text/plain")),
+        ("PhoneRequestAuthorization",
+         lambda: Response("true", mimetype="text/plain")),
         ("PhoneGetDeviceInfo", get_device_info),
         ("PhoneRefreshScreen", refresh_screen)
     )  # type: typing.Tuple[typing.Tuple[str, callable]]

@@ -9,7 +9,9 @@ class AirmoreRequestTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(ipaddress.IPv4Address("127.0.0.1"))
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
 
     def setUp(self):
         super().setUp()
@@ -27,7 +29,10 @@ class AirmoreRequestTestCase(unittest.TestCase):
 
     def test_prepare_url_contains_base_url(self):
         self.request.prepare_url("/foo", {})
-        self.assertEqual(self.session.base_url, self.request.url[:len(self.session.base_url)])
+        self.assertEqual(
+            self.session.base_url,
+            self.request.url[:len(self.session.base_url)]
+        )
 
     def test_prepare_url_without_params(self):
         self.request.prepare_url("/foo", {})
@@ -42,7 +47,9 @@ class AirmoreSessionTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(ipaddress.IPv4Address("127.0.0.1"))
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
 
     def test_is_server_running(self):
         self.assertTrue(self.session.is_server_running)

@@ -1,9 +1,8 @@
-"""PyAirmore (the package name of which is ``pyairmore``) is a Python client library for Android Airmore server,
-which helps the developers to take programmatic actions on Android.
-"""
+"""PyAirmore (the package name of which is ``pyairmore``) is a Python client
+library for Android Airmore server, which helps the developers to take
+programmatic actions on Android. """
 
 import pyairmore.request
-from pyairmore.request import ServerUnreachableException, AuthorizationException
 
 __version__ = "0.1.0a13"
 __author__ = "Eray Erdin"
@@ -11,5 +10,3 @@ __author__ = "Eray Erdin"
 
 def _clean_base64_png(encoded: str) -> str:
     return encoded[22:]
-
-
