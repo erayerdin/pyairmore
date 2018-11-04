@@ -1,6 +1,6 @@
+import datetime
 import ipaddress
 import unittest
-import datetime
 
 import pyairmore.services.messaging
 
@@ -73,3 +73,23 @@ class MessageHistoryRequestTestCase(unittest.TestCase):
 
     def test_url_endswith(self):
         self.assertTrue(self.request.url.endswith("/?Key=MessageGetLatest"))
+
+
+class MessagingServiceFetchMessageHistoryTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.service = pyairmore.services.messaging.MessagingService(
+            cls.session
+        )
+        cls.messages = cls.service.fetch_message_history()
+
+    def test_return_type(self):
+        self.assertTrue(hasattr(self.messages, "__iter__"))
+
+    def test_children_type(self):
+        for m in self.messages:
+            self.assertIsInstance(m, pyairmore.services.messaging.Message)
