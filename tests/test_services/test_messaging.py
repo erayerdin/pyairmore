@@ -55,3 +55,21 @@ class MessageTestCase(unittest.TestCase):
     def test_count_greater_than_zero(self):
         for m in self.messages:
             self.assertGreater(m.count, 0)
+
+
+class MessageHistoryRequestTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.request = pyairmore.services.messaging.MessageHistoryRequest(
+            cls.session
+        )
+
+    def test_url_startswith(self):
+        self.assertTrue(self.request.url.startswith(self.session.base_url))
+
+    def test_url_endswith(self):
+        self.assertTrue(self.request.url.endswith("/?Key=MessageGetLatest"))
