@@ -31,7 +31,7 @@ class MessageType(enum.Enum):
     SENT = 2
 
 
-class Message:
+class Message:  # todo 1 - equality methods
     """A class that consists of information about a particular SMS."""
 
     def __init__(self):
@@ -191,6 +191,8 @@ class MessagingService(pyairmore.services.Service):
 
             Contact services will be provided on a future release. Ignore the
             term "contact" in ``contact_or_phone`` parameter.
+
+        :raises MessageRequestGSMError:
         """
 
         request = SendMessageRequest(self.session, contact_or_phone, content)
@@ -211,7 +213,6 @@ class MessagingService(pyairmore.services.Service):
         :param message_or_id: ``Message`` object or a ``str`` id.
         :param start: Starting point.
         :param limit: Limit of messages to fetch.
-        :return:
         """
 
         if isinstance(message_or_id, Message):

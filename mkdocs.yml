@@ -12,3 +12,4 @@ nav:
   - Services:
       - services/index.md
       - services/device-service.md
+      - services/messaging-service.md
