@@ -17,7 +17,6 @@ jobs:
     python: '3.6'
     install:
       - pip install -r dev.requirements.txt
-      - pip install -r doc.requirements.txt
     script:
       - mkdocs build --verbose --strict
   - stage: Testing with Specified requests (Python 3.5)
