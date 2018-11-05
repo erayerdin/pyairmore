@@ -1,10 +1,20 @@
 # todo 1 - module doc
+import uuid
+
 import typing
 
 import datetime
 import enum
 
 import pyairmore
+
+
+class MessageRequestGSMError(Exception):
+    # todo 1 - class doc
+
+    def __init__(self, *args: object, **kwargs: object) -> None:
+        message = "Message could not be sent due to GSM connectivity."
+        super().__init__(message, *args, **kwargs)
 
 
 class MessageType(enum.Enum):
@@ -38,6 +48,29 @@ class MessageHistoryRequest(pyairmore.request.AirmoreRequest):
         super().__init__(session)
 
         self.prepare_url("/", {"Key": "MessageGetLatest"})
+
+
+class SendMessageRequest(pyairmore.request.AirmoreRequest):
+    """A request to send message.
+
+    | **Endpoint:** /?Key=MessageSend
+    """
+
+    def __init__(self,
+                 session: pyairmore.request.AirmoreSession,
+                 phone: str,
+                 content: str):
+        super().__init__(session)
+
+        self.prepare_url("/", {"Key": "MessageSend"})
+        self.prepare_headers({})
+
+        data = {
+            "Phone": str(phone),
+            "Content": str(content),
+            "UniqueID": uuid.uuid1().hex
+        }
+        self.prepare_body("", None, [data])
 
 
 class MessagingService(pyairmore.services.Service):
@@ -89,6 +122,17 @@ class MessagingService(pyairmore.services.Service):
             messages.append(message)
 
         return messages
+
+    def send_message(self,
+                     contact: typing.Union[str],  # todo 3 - support contact
+                     content: str) -> None:
+        # todo 2 - method doc
+
+        request = SendMessageRequest(self.session, contact, content)
+        response = self.session.send(request)
+
+        if response.text != "2":
+            raise MessageRequestGSMError()
 
 
 __all__ = [

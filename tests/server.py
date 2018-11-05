@@ -21,6 +21,16 @@ def message_get_latest() -> Response:
         return Response(f.read(), mimetype="text/plain")
 
 
+def message_send() -> Response:
+    data = request.get_json(silent=True)  # type: list
+
+    if data:
+        if data[0].get("Phone", None) == "123":
+            return Response("3", mimetype="text/plain")  # solid rng
+        else:
+            return Response("2", mimetype="text/plain")
+
+
 @app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
@@ -36,11 +46,15 @@ def path():
         ("PhoneGetDeviceInfo", get_device_info),
         ("PhoneRefreshScreen", refresh_screen),
         ("MessageGetLatest", message_get_latest),
+        ("MessageSend", message_send),
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
         if arg == response[0]:
-            return response[1]()
+            res = response[1]()
+
+            if res:
+                return res
 
     return Response(default_response, mimetype="text/plain")
 
