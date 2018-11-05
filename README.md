@@ -53,15 +53,15 @@ sake of simplicity, we will use a service called `DeviceService`.
     # you can once more do `Session::is_server_running` and
     # `Session::request_authorization` just in case
     
-    detail = device.fetch_device_detail()
+    details = device.fetch_device_details()
     
     # Now we can access many details about out device.
     
-    detail.power  # 0.74
-    detail.device_name  # "My device"
-    detail.is_root  # True, bcoz real men use rooted device
-    detail.imei  # muhahaha
-    detail.call_history_count  # 666
+    details.power  # 0.74
+    details.device_name  # "My device"
+    details.is_root  # True, bcoz real men use rooted device
+    details.imei  # muhahaha
+    details.call_history_count  # 666
     
     # so on and so forth
     
