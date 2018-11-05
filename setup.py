@@ -19,7 +19,8 @@ setup(
     download_url="https://github.com/erayerdin/exceptive/archive/master.zip",
     packages=[
         "pyairmore",
-        "pyairmore.services"
+        "pyairmore.services",
+        "pyairmore.request",
     ],
     include_package_data=True,
     keywords="python android airmore pyairmore",
