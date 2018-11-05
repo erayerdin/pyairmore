@@ -1,16 +1,16 @@
 # PyAirmore
 
-[![PyPI](https://img.shields.io/pypi/v/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+[![PyPI](https://img.shields.io/pypi/v/pyairmore.svg?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/pyairmore/)
 [![PyPI - License](https://img.shields.io/pypi/l/pyairmore.svg?style=flat-square)](LICENSE.txt)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/pyairmore/)
 [![PyPI - Status](https://img.shields.io/pypi/status/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f9dcb968a7cc4804b64ae7e0fac3a5be)](https://www.codacy.com/app/erayerdin/pyairmore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erayerdin/pyairmore&amp;utm_campaign=Badge_Grade)
-[![Gitter](https://img.shields.io/gitter/room/pyairmore/Lobby.svg?style=flat-square)](http://gitter.im/pyairmore/Lobby)
+[![Gitter](https://img.shields.io/gitter/room/pyairmore/Lobby.svg?style=flat-square&logo=gitter&logoColor=white)](http://gitter.im/pyairmore/Lobby)
 
 |             | Build | Coverage |
 |-------------|-------|----------|
-| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore)           | [![Codecov master](https://img.shields.io/codecov/c/github/erayerdin/pyairmore/master.svg?style=flat-square)](https://codecov.io/gh/erayerdin/pyairmore)      |
-| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square)](https://travis-ci.org/erayerdin/pyairmore) | [![Codecov development](https://img.shields.io/codecov/c/github/erayerdin/pyairmore/development.svg?style=flat-square)](https://codecov.io/gh/erayerdin/pyairmore) |
+| master      | [![Travis (.org) master](https://img.shields.io/travis/erayerdin/pyairmore/master.svg?style=flat-square&logo=travis&logoColor=white)](https://travis-ci.org/erayerdin/pyairmore)           | [![Codecov master](https://img.shields.io/codecov/c/github/erayerdin/pyairmore/master.svg?style=flat-square&logo=codecov&logoColor=white)](https://codecov.io/gh/erayerdin/pyairmore)      |
+| development | [![Travis (.org) development](https://img.shields.io/travis/erayerdin/pyairmore/development.svg?style=flat-square&logo=travis&logoColor=white)](https://travis-ci.org/erayerdin/pyairmore) | [![Codecov development](https://img.shields.io/codecov/c/github/erayerdin/pyairmore/development.svg?style=flat-square&logo=codecov&logoColor=white)](https://codecov.io/gh/erayerdin/pyairmore) |
 
 PyAirmore is a Airmore client library for Android Airmore server. You can get
 information from Airmore server on your Android.
