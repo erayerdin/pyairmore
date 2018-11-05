@@ -1,4 +1,4 @@
-# todo 1 - module doc
+"""Service and utilities related to messaging aspect."""
 import requests
 import uuid
 
@@ -11,7 +11,9 @@ import pyairmore
 
 
 class MessageRequestGSMError(Exception):
-    # todo 1 - class doc
+    """Raised when "/?Key=MessageSend" does not return "2" to imply that
+    something bad happened on the server side.
+    """
 
     def __init__(self, *args: object, **kwargs: object) -> None:
         message = "Message could not be sent due to GSM connectivity."
@@ -19,14 +21,18 @@ class MessageRequestGSMError(Exception):
 
 
 class MessageType(enum.Enum):
-    # todo 1 - class doc
+    """Defines if the message was sent or received.
+
+    | **RECEIVED (1)**: Target device received the message.
+    | **SENT (2)**: Target device sent the message.
+    """
 
     RECEIVED = 1
     SENT = 2
 
 
 class Message:
-    # todo 1 - class doc
+    """A class that consists of information about a particular SMS."""
 
     def __init__(self):
         self.id = None  # type: str
@@ -61,7 +67,11 @@ class SendMessageRequest(pyairmore.request.AirmoreRequest):
                  session: pyairmore.request.AirmoreSession,
                  phone: str,
                  content: str):
-        # todo 1 - init doc
+        """
+        :param session: Session object, which will be passed to super init.
+        :param phone: Phone to send message to.
+        :param content: Message content.
+        """
 
         super().__init__(session)
 
@@ -87,7 +97,12 @@ class ChatHistoryRequest(pyairmore.request.AirmoreRequest):
                  id: str,
                  start: int = 0,
                  limit: int = 10):
-        # todo 2 - init doc
+        """
+        :param session: Session object, which will be passed to super init.
+        :param id: ID of message.
+        :param start: Start point.
+        :param limit: Limit of messages.
+        """
 
         super().__init__(session)
 
@@ -103,7 +118,7 @@ class ChatHistoryRequest(pyairmore.request.AirmoreRequest):
 
 
 class MessagingService(pyairmore.services.Service):
-    # todo 1 - class doc
+    """A service to manage and send messages."""
 
     def __init__(self, session: pyairmore.request.AirmoreSession):
         super().__init__(session)
@@ -112,7 +127,9 @@ class MessagingService(pyairmore.services.Service):
     def __convert_list_json_to_messages(
             response: requests.Response
     ) -> typing.List[Message]:
-        # todo 3 - method doc
+        """Will convert a message response from Airmore server to a list of
+        ``Message`` objects.
+        """
 
         messages = []
         data = response.json()  # type: typing.List[dict]
@@ -153,7 +170,11 @@ class MessagingService(pyairmore.services.Service):
         return messages
 
     def fetch_message_history(self) -> typing.List[Message]:
-        # todo 2 - method doc
+        """Gets latest messages from your phone. These messages will be
+        historically descending order.
+
+        Will return empty list if could not be found.
+        """
 
         request = MessageHistoryRequest(self.session)
         response = self.session.send(request)
@@ -164,7 +185,13 @@ class MessagingService(pyairmore.services.Service):
                      contact_or_phone: typing.Union[str],
                      # todo 3 - support contact
                      content: str) -> None:
-        # todo 2 - method doc
+        """Sends a single message.
+
+        .. note::
+
+            Contact services will be provided on a future release. Ignore the
+            term "contact" in ``contact_or_phone`` parameter.
+        """
 
         request = SendMessageRequest(self.session, contact_or_phone, content)
         response = self.session.send(request)
@@ -176,7 +203,16 @@ class MessagingService(pyairmore.services.Service):
                            message_or_id: typing.Union[Message, str],
                            start: int = 0,
                            limit: int = 10) -> typing.List[Message]:
-        # todo 2 - method doc
+        """Fetches a chat that a particular message is in. These messages will
+        be historically descending order.
+
+        Will return empty list if could not be found.
+
+        :param message_or_id: ``Message`` object or a ``str`` id.
+        :param start: Starting point.
+        :param limit: Limit of messages to fetch.
+        :return:
+        """
 
         if isinstance(message_or_id, Message):
             message_id = message_or_id.id
