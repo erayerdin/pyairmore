@@ -4,7 +4,7 @@
 [![PyPI - Status](https://img.shields.io/pypi/status/pyairmore.svg?style=flat-square)](https://pypi.org/project/pyairmore/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/pyairmore/)
 [![PyPI - License](https://img.shields.io/pypi/l/pyairmore.svg?style=flat-square)](LICENSE.txt)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f9dcb968a7cc4804b64ae7e0fac3a5be)](https://www.codacy.com/app/erayerdin/pyairmore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erayerdin/pyairmore&amp;utm_campaign=Badge_Grade)
+[![Codacy grade](https://img.shields.io/codacy/grade/f9dcb968a7cc4804b64ae7e0fac3a5be.svg?logo=codacy&logoColor=white&style=flat-square)](https://www.codacy.com/app/erayerdin/pyairmore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erayerdin/pyairmore&amp;utm_campaign=Badge_Grade)
 [![Gitter](https://img.shields.io/gitter/room/pyairmore/Lobby.svg?style=flat-square&logo=gitter&logoColor=white)](http://gitter.im/pyairmore/Lobby)
 
 |             | Build | Coverage |
