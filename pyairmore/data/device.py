@@ -1,3 +1,6 @@
+# todo 1 - module doc
+
+
 class DeviceDetails:
     """A class that contains several attributes which are details about the
     target device. """

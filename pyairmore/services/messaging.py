@@ -1,13 +1,13 @@
 """Service and utilities related to messaging aspect."""
 import requests
-import uuid
 
 import typing
 
 import datetime
-import enum
 
 import pyairmore
+import pyairmore.data.messaging
+import pyairmore.request.messaging
 
 
 class MessageRequestGSMError(Exception):
@@ -20,131 +20,6 @@ class MessageRequestGSMError(Exception):
         super().__init__(message, *args, **kwargs)
 
 
-class MessageType(enum.Enum):
-    """Defines if the message was sent or received.
-
-    | **RECEIVED (1)**: Target device received the message.
-    | **SENT (2)**: Target device sent the message.
-    """
-
-    RECEIVED = 1
-    SENT = 2
-
-
-class Message:  # todo 1 - equality methods
-    """A class that consists of information about a particular SMS."""
-
-    def __init__(self):
-        self.id = None  # type: str
-        self.name = None  # type: str
-        self.phone = None  # type: str
-        self.datetime = None  # type: datetime.datetime
-        self.content = None  # type: str
-        self.type = MessageType.RECEIVED  # type: MessageType
-        self.was_read = True  # type: bool
-        self.count = 1  # type: int
-
-    def __eq__(self, other: "Message") -> bool:
-        if self is other:
-            return True
-
-        return all((
-            self.id == other.id,
-            self.name == other.name,
-            self.phone == other.phone,
-            self.datetime == other.datetime,
-            self.content == other.content,
-            self.type == other.type,
-        ))
-
-    def __ne__(self, other: "Message") -> bool:
-        return not self.__eq__(other)
-
-    def __gt__(self, other: "Message") -> bool:
-        return self.datetime > other.datetime
-
-    def __ge__(self, other: "Message") -> bool:
-        return self.datetime >= other.datetime
-
-    def __lt__(self, other: "Message") -> bool:
-        return self.datetime < other.datetime
-
-    def __le__(self, other: "Message") -> bool:
-        return self.datetime <= other.datetime
-
-
-class MessageHistoryRequest(pyairmore.request.AirmoreRequest):
-    """A request to get latest messages.
-
-    | **Endpoint:** /?Key=MessageGetLatest
-    """
-
-    def __init__(self, session: pyairmore.request.AirmoreSession):
-        super().__init__(session)
-
-        self.prepare_url("/", {"Key": "MessageGetLatest"})
-
-
-class SendMessageRequest(pyairmore.request.AirmoreRequest):
-    """A request to send message.
-
-    | **Endpoint:** /?Key=MessageSend
-    """
-
-    def __init__(self,
-                 session: pyairmore.request.AirmoreSession,
-                 phone: str,
-                 content: str):
-        """
-        :param session: Session object, which will be passed to super init.
-        :param phone: Phone to send message to.
-        :param content: Message content.
-        """
-
-        super().__init__(session)
-
-        self.prepare_url("/", {"Key": "MessageSend"})
-        self.prepare_headers({})
-
-        data = {
-            "Phone": str(phone),
-            "Content": str(content),
-            "UniqueID": uuid.uuid1().hex
-        }
-        self.prepare_body("", None, [data])
-
-
-class ChatHistoryRequest(pyairmore.request.AirmoreRequest):
-    """A request to see a particular chat's history.
-
-    | **Endpoint:** /?Key=MessageGetList
-    """
-
-    def __init__(self,
-                 session: pyairmore.request.AirmoreSession,
-                 id: str,
-                 start: int = 0,
-                 limit: int = 10):
-        """
-        :param session: Session object, which will be passed to super init.
-        :param id: ID of message.
-        :param start: Start point.
-        :param limit: Limit of messages.
-        """
-
-        super().__init__(session)
-
-        self.prepare_url("/", {"Key": "MessageGetList"})
-        self.prepare_headers({})
-
-        data = {
-            "ID": str(id),
-            "Start": int(start),
-            "Limit": int(limit)
-        }
-        self.prepare_body("", None, data)
-
-
 class MessagingService(pyairmore.services.Service):
     """A service to manage and send messages."""
 
@@ -154,7 +29,7 @@ class MessagingService(pyairmore.services.Service):
     @staticmethod
     def __convert_list_json_to_messages(
             response: requests.Response
-    ) -> typing.List[Message]:
+    ) -> typing.List[pyairmore.data.messaging.Message]:
         """Will convert a message response from Airmore server to a list of
         ``Message`` objects.
         """
@@ -163,7 +38,7 @@ class MessagingService(pyairmore.services.Service):
         data = response.json()  # type: typing.List[dict]
 
         for d in data:
-            message = Message()
+            message = pyairmore.data.messaging.Message()
 
             message.id = d.get("ID", None)
             message.name = d.get("ShowName", None)
@@ -185,7 +60,7 @@ class MessagingService(pyairmore.services.Service):
             # detecting type
             message_type = d.get("MsgType", None)
             if message_type and message_type != 1:
-                message.type = MessageType.SENT
+                message.type = pyairmore.data.messaging.MessageType.SENT
 
             # was read
             read = d.get("Read", 1)
@@ -197,14 +72,17 @@ class MessagingService(pyairmore.services.Service):
 
         return messages
 
-    def fetch_message_history(self) -> typing.List[Message]:
+    def fetch_message_history(self) \
+            -> typing.List[pyairmore.data.messaging.Message]:
         """Gets latest messages from your phone. These messages will be
         historically descending order.
 
         Will return empty list if could not be found.
         """
 
-        request = MessageHistoryRequest(self.session)
+        request = pyairmore.request.messaging.MessageHistoryRequest(
+            self.session
+        )
         response = self.session.send(request)
 
         return self.__convert_list_json_to_messages(response)
@@ -223,16 +101,21 @@ class MessagingService(pyairmore.services.Service):
         :raises MessageRequestGSMError:
         """
 
-        request = SendMessageRequest(self.session, contact_or_phone, content)
+        request = pyairmore.request.messaging.SendMessageRequest(
+            self.session, contact_or_phone, content
+        )
         response = self.session.send(request)
 
         if response.text != "2":
             raise MessageRequestGSMError()
 
     def fetch_chat_history(self,
-                           message_or_id: typing.Union[Message, str],
+                           message_or_id: typing.Union[
+                               pyairmore.data.messaging.Message, str
+                           ],
                            start: int = 0,
-                           limit: int = 10) -> typing.List[Message]:
+                           limit: int = 10) \
+            -> typing.List[pyairmore.data.messaging.Message]:
         """Fetches a chat that a particular message is in. These messages will
         be historically descending order.
 
@@ -243,7 +126,7 @@ class MessagingService(pyairmore.services.Service):
         :param limit: Limit of messages to fetch.
         """
 
-        if isinstance(message_or_id, Message):
+        if isinstance(message_or_id, pyairmore.data.messaging.Message):
             message_id = message_or_id.id
         else:
             message_id = str(message_or_id)
@@ -251,7 +134,9 @@ class MessagingService(pyairmore.services.Service):
         start = int(start)
         limit = int(limit)
 
-        request = ChatHistoryRequest(self.session, message_id, start, limit)
+        request = pyairmore.request.messaging.ChatHistoryRequest(
+            self.session, message_id, start, limit
+        )
         response = self.session.send(request)
 
         return self.__convert_list_json_to_messages(response)

@@ -3,6 +3,8 @@ import ipaddress
 import json
 import unittest
 
+import pyairmore.data.messaging
+import pyairmore.request.messaging
 import pyairmore.services.messaging
 
 
@@ -42,7 +44,7 @@ class MessageTestCase(unittest.TestCase):
         for m in self.messages:
             self.assertIsInstance(
                 m.type,
-                pyairmore.services.messaging.MessageType
+                pyairmore.data.messaging.MessageType
             )
 
     def test_was_read_type(self):
@@ -62,9 +64,9 @@ class MessageComparisonTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.m1 = pyairmore.services.messaging.Message()
-        cls.m2 = pyairmore.services.messaging.Message()
-        cls.m3 = pyairmore.services.messaging.Message()
+        cls.m1 = pyairmore.data.messaging.Message()
+        cls.m2 = pyairmore.data.messaging.Message()
+        cls.m3 = pyairmore.data.messaging.Message()
 
         now = datetime.datetime.now()
         eq_attrs = {
@@ -118,7 +120,7 @@ class MessageHistoryRequestTestCase(unittest.TestCase):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.request = pyairmore.services.messaging.MessageHistoryRequest(
+        cls.request = pyairmore.request.messaging.MessageHistoryRequest(
             cls.session
         )
 
@@ -139,7 +141,7 @@ class SendMessageRequestTestCase(unittest.TestCase):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.request = pyairmore.services.messaging.SendMessageRequest(
+        cls.request = pyairmore.request.messaging.SendMessageRequest(
             cls.session, "321", "foo"
         )
         if isinstance(cls.request.body, bytes):
@@ -176,7 +178,7 @@ class ChatHistoryRequestTestCase(unittest.TestCase):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.request = pyairmore.services.messaging.ChatHistoryRequest(
+        cls.request = pyairmore.request.messaging.ChatHistoryRequest(
             cls.session, "foo", 5, 15
         )
         if isinstance(cls.request.body, bytes):
@@ -222,7 +224,7 @@ class MessagingServiceFetchMessageHistoryTestCase(unittest.TestCase):
 
     def test_children_type(self):
         for m in self.messages:
-            self.assertIsInstance(m, pyairmore.services.messaging.Message)
+            self.assertIsInstance(m, pyairmore.data.messaging.Message)
 
 
 class MessagingServiceSendMessageTestCase(unittest.TestCase):
