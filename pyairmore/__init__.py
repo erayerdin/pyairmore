@@ -2,7 +2,7 @@
 library for Android Airmore server, which helps the developers to take
 programmatic actions on Android. """
 
-__version__ = "0.2.0a1"
+__version__ = "0.2.1a1"
 __author__ = "Eray Erdin"
 
 
