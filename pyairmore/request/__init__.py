@@ -1,6 +1,5 @@
 """``request`` package contains some classes extending another classes from
 ``requests`` package to make easier requests to an Airmore server. """
-import typing
 
 import ipaddress
 

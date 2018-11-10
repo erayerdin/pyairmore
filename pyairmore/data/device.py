@@ -1,4 +1,4 @@
-# todo 1 - module doc
+"""Contains classes/models for Device aspect."""
 
 
 class DeviceDetails:

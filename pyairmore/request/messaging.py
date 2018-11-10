@@ -1,4 +1,4 @@
-# todo 1 - module doc
+"""Contains ``AirmoreRequest`` classes for messaging aspect."""
 import uuid
 
 import pyairmore.request

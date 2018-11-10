@@ -1,4 +1,4 @@
-# todo 1 - module doc
+"""Contains classes/methods for messaging aspect."""
 import enum
 
 
@@ -13,7 +13,7 @@ class MessageType(enum.Enum):
     SENT = 2
 
 
-class Message:  # todo 1 - equality methods
+class Message:
     """A class that consists of information about a particular SMS."""
 
     def __init__(self):
