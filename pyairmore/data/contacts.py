@@ -20,6 +20,9 @@ class Source:
     def __ne__(self, other: "Source") -> bool:
         return not self.__eq__(other)
 
+    def __hash__(self) -> int:
+        return hash(str(self.type) + str(self.name))
+
 
 class Group:
     # todo 1 - class doc
@@ -43,3 +46,6 @@ class Group:
 
     def __ne__(self, other: "Group") -> bool:
         return not self.__eq__(other)
+
+    def __hash__(self) -> int:
+        return hash(str(self.id)+str(self.name))

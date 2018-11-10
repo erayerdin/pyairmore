@@ -26,6 +26,14 @@ class SourceComparisonTestCase(unittest.TestCase):
         self.assertNotEqual(self.s1, self.s3)
         self.assertNotEqual(self.s2, self.s3)
 
+    def test_hash_via_set(self):
+        sources = set()
+        sources.add(self.s1)
+        sources.add(self.s2)
+        sources.add(self.s3)
+
+        self.assertEqual(len(sources), 2)
+
 
 class GroupComparisonTestCase(unittest.TestCase):
     @classmethod
@@ -59,3 +67,12 @@ class GroupComparisonTestCase(unittest.TestCase):
     def test_equal_name_reassingment(self):
         self.assertEqual(self.g2, self.g3)
         self.assertEqual(self.g2.name, "Bar")
+
+    def test_hashable_via_set(self):
+        groups = set()
+        groups.add(self.g1)
+        groups.add(self.g2)
+        groups.add(self.g3)
+        groups.add(self.g4)
+
+        self.assertEqual(len(groups), 2)
