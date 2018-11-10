@@ -10,7 +10,7 @@ import pyairmore.request
 import pyairmore.services.device
 
 
-class DeviceDetailRequestTestCase(unittest.TestCase):
+class DeviceServiceFetchDeviceDetailsTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -136,7 +136,7 @@ class DeviceDetailRequestTestCase(unittest.TestCase):
         self.assertEqual(power, 0.85)
 
 
-class DeviceScreenshotRequestTestCase(unittest.TestCase):
+class DeviceServiceTakeScreenshotTestCase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
