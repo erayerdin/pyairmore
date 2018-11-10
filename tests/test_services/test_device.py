@@ -1,4 +1,8 @@
-import collections
+try:
+    from collections import Iterable
+except ImportError:
+    from collections.abc import Iterable
+
 import ipaddress
 import unittest
 
@@ -122,7 +126,7 @@ class DeviceDetailRequestTestCase(unittest.TestCase):
 
     def test_resolution(self):
         resolution = self.detail.resolution
-        self.assertIsInstance(resolution, collections.Iterable)
+        self.assertIsInstance(resolution, Iterable)
         self.assertEqual(resolution[0], 1080)
         self.assertEqual(resolution[1], 1920)
 
