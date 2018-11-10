@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
  - `nose` to `pytest` in development environment
-
+ - Reformatted some units in `service` to `data` and `request` packages
+ including tests
+ 
 ## [0.2.0a1] - 2018-11-05
 ### Added
  - New `service.messaging` module. Now you can manage your messages.

@@ -21,6 +21,7 @@ setup(
         "pyairmore",
         "pyairmore.services",
         "pyairmore.request",
+        "pyairmore.data",
     ],
     include_package_data=True,
     keywords="python android airmore pyairmore",
