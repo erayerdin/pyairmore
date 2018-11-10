@@ -197,9 +197,3 @@ class AuthorizationException(Exception):
         message = "Could not authorize. Please accept authorization on " \
                   "target device. "
         super().__init__(message)
-
-
-__all__ = [
-    "AirmoreSession",
-    "AirmoreRequest"
-]

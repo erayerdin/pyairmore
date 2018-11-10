@@ -140,8 +140,3 @@ class MessagingService(pyairmore.services.Service):
         response = self.session.send(request)
 
         return self.__convert_list_json_to_messages(response)
-
-
-__all__ = [
-    "MessagingService"
-]

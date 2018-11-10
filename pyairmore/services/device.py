@@ -92,6 +92,3 @@ class DeviceService(pyairmore.services.Service):
         image = PIL.Image.open(BytesIO(base64.b64decode(content)))
 
         return image
-
-
-__all__ = ["DeviceService"]
