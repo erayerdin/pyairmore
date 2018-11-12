@@ -3,6 +3,7 @@ import json
 import unittest
 
 import pyairmore.request
+import pyairmore.request.messaging
 
 
 class MessageHistoryRequestTestCase(unittest.TestCase):

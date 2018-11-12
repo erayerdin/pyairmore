@@ -1,4 +1,4 @@
-"""Service and utilities related to messaging aspect."""
+"""Services related to messaging aspect."""
 import requests
 
 import typing

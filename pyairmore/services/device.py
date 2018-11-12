@@ -1,4 +1,4 @@
-"""Service and utilities related to device aspect."""
+"""Services related to device aspect."""
 
 import pyairmore.services
 import pyairmore.request
