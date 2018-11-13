@@ -3,6 +3,7 @@ import random
 
 import json
 import typing
+# noinspection PyPackageRequirements
 from flask import Flask, request, Response
 
 app = Flask(__name__)
@@ -40,6 +41,7 @@ def message_get_list() -> Response:
         if isinstance(data, dict):
             max_limit = 20
 
+            # noinspection PyShadowingBuiltins
             id = data.get("ID", "")
             start = data.get("Start", 0)
             limit = data.get("Limit", max_limit)
@@ -77,11 +79,48 @@ def message_get_list() -> Response:
     return response
 
 
+groups = []  # type: typing.List[dict]
+
+
 def contact_group_get_list() -> Response:
-    with open("resources/test/contact_group_get_list.txt", "r") as f:
-        response = Response(f.read(), mimetype="text/plain")
+    global groups
+    if not groups:
+        with open("resources/test/contact_group_get_list.txt", "r") as f:
+            groups = json.loads(f.read())
+
+    response = Response(json.dumps(groups), mimetype="text/plain")
 
     return response
+
+
+def contact_add_group() -> Response:
+    global groups  # type: typing.List[dict]
+
+    def get_next_id() -> int:
+        ids = [g["ID"] for g in groups]
+        return max(ids)+1
+
+    group_name = str(
+        request.get_json(silent=True)[0]["GroupName"]
+    )  # type: str
+    # noinspection PyShadowingBuiltins
+    id = get_next_id()
+
+    group_data = {
+        "ID": id,
+        "GroupName": group_name,
+        "AccountName": "baz",
+        "AccountType": "pyairmore"
+    }
+
+    groups.append(group_data)
+
+    response_data = group_data.copy()
+
+    response_data.pop("AccountType")
+    response_data.pop("AccountName")
+
+    return Response(json.dumps([response_data]), mimetype="text/plain")
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -102,6 +141,7 @@ def path():
         ("MessageSend", message_send),
         ("MessageGetList", message_get_list),
         ("ContactGroupGetList", contact_group_get_list),
+        ("ContactAddGroup", contact_add_group),
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:

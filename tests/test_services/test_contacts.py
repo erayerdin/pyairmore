@@ -39,3 +39,32 @@ class GroupServiceGetGroupsTestCase(unittest.TestCase):
     def test_children_type(self):
         for g in self.groups:
             self.assertIsInstance(g, pyairmore.data.contacts.Group)
+
+
+class GroupServiceCreateGroupTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.service = pyairmore.services.contacts.GroupService(
+            cls.session
+        )
+
+    def test_group_id(self):
+        former_count = len(self.service.get_groups())
+        group = self.service.create_group("foo")
+        self.assertEqual(group.id, str(former_count+1))
+
+    def test_group_name(self):
+        group = self.service.create_group("foo")
+        self.assertEqual(group.name, "foo")
+
+    def test_group_source_type(self):
+        source = self.service.create_group("foo").source
+        self.assertEqual(source.type, "pyairmore")
+
+    def test_group_source_name(self):
+        source = self.service.create_group("foo").source
+        self.assertEqual(source.name, "baz")

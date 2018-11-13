@@ -30,12 +30,26 @@ class GroupService(pyairmore.services.Service):
             g = pyairmore.data.contacts.Group()
             s = pyairmore.data.contacts.Source()
 
-            g.id = str(d.get("ID", None))
-            g.name = d.get("GroupName")
-            _groups.add(g)
-
             s.type = d.get("AccountType", None)
             s.name = d.get("AccountName", None)
             _sources.add(s)
 
+            g.id = str(d.get("ID", None))
+            g.name = d.get("GroupName")
+            g.source = s
+            _groups.add(g)
+
         return _groups
+
+    def create_group(self, name: str) -> pyairmore.data.contacts.Group:
+        # todo 2 - method doc
+
+        request = pyairmore.request.contacts.CreateGroupRequest(
+            self.session, str(name)
+        )
+        response = self.session.send(request)
+        group_id = str(response.json()[0]["ID"])
+        self.get_groups()
+
+        group = next(filter(lambda g: g.id == group_id, _groups))
+        return group

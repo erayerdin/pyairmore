@@ -30,6 +30,7 @@ class Group:
     def __init__(self):
         self.id = None  # type: str
         self.name = None  # type: str
+        self.source = None  # type: Source
 
     def __eq__(self, other: "Group") -> bool:
         if self is other:
@@ -37,6 +38,7 @@ class Group:
 
         val = all((
             self.id == other.id,
+            self.source == other.source
         ))
 
         # change name
