@@ -14,3 +14,17 @@ class GroupsRequest(pyairmore.request.AirmoreRequest):
         self.prepare_url("/", {"Key": "ContactGroupGetList"})
         self.prepare_headers({})
         self.prepare_body("", None, {})
+
+
+class CreateGroupRequest(pyairmore.request.AirmoreRequest):
+    """A request to create a group.
+
+    | **Endpoint:** /?Key=ContactAddGroup
+    """
+
+    def __init__(self, session: pyairmore.request.AirmoreSession, name: str):
+        super().__init__(session)
+
+        self.prepare_url("/", {"Key": "ContactAddGroup"})
+        self.prepare_headers({})
+        self.prepare_body("", None, [{"GroupName": str(name)}])
