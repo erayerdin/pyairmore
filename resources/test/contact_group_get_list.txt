@@ -1,0 +1,62 @@
+[
+  {
+    "ID": 1,
+    "GroupName": "sit ullamco Lorem",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.bar"
+  },
+  {
+    "ID": 2,
+    "GroupName": "cillum dolore dolor",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.baz"
+  },
+  {
+    "ID": 3,
+    "GroupName": "sit cupidatat cupidatat",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.foo"
+  },
+  {
+    "ID": 4,
+    "GroupName": "eu do enim",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.bar"
+  },
+  {
+    "ID": 5,
+    "GroupName": "anim duis pariatur",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.baz"
+  },
+  {
+    "ID": 6,
+    "GroupName": "sint ipsum aliquip",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.baz"
+  },
+  {
+    "ID": 7,
+    "GroupName": "elit laborum excepteur",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.baz"
+  },
+  {
+    "ID": 8,
+    "GroupName": "cillum ullamco eu",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.foo"
+  },
+  {
+    "ID": 9,
+    "GroupName": "occaecat irure sunt",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.foo"
+  },
+  {
+    "ID": 10,
+    "GroupName": "nostrud excepteur occaecat",
+    "AccountName": "foo@bar.baz",
+    "AccountType": "com.bar"
+  }
+]

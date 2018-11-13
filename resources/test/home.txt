@@ -7,3 +7,4 @@ Paths
  - /?Key=PhoneGetDeviceInfo&IsDetail=true
  - /?Key=PhoneRefreshScreen
  - /?Key=MessageGetLatest
+ - /?Key=ContactGroupGetList

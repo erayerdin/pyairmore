@@ -77,6 +77,13 @@ def message_get_list() -> Response:
     return response
 
 
+def contact_group_get_list() -> Response:
+    with open("resources/test/contact_group_get_list.txt", "r") as f:
+        response = Response(f.read(), mimetype="text/plain")
+
+    return response
+
+
 @app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
@@ -94,6 +101,7 @@ def path():
         ("MessageGetLatest", message_get_latest),
         ("MessageSend", message_send),
         ("MessageGetList", message_get_list),
+        ("ContactGroupGetList", contact_group_get_list),
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
