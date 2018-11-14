@@ -116,7 +116,32 @@ def contact_add_group() -> Response:
     groups.append(group_data)
 
     response_data = group_data.copy()
+    response_data.pop("AccountType")
+    response_data.pop("AccountName")
 
+    return Response(json.dumps([response_data]), mimetype="text/plain")
+
+
+def contact_update_group() -> Response:
+    global groups
+
+    # noinspection PyShadowingBuiltins
+    id = request.get_json(silent=True)[0]["ID"]
+    name = request.get_json(silent=True)[0]["GroupName"]
+
+    group_data = {
+        "ID": id,
+        "GroupName": name,
+        "AccountName": "baz",
+        "AccountType": "pyairmore"
+    }
+
+    for i, g in enumerate(groups):
+        if g["ID"] == group_data["ID"]:
+            groups[i] = group_data
+            break
+
+    response_data = group_data.copy()
     response_data.pop("AccountType")
     response_data.pop("AccountName")
 

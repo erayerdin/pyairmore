@@ -53,3 +53,24 @@ class GroupService(pyairmore.services.Service):
 
         group = next(filter(lambda g: g.id == group_id, _groups))
         return group
+
+    def update_group(self,  # todo 1 - bug - fix this
+                     id_or_group: typing.Union[
+                         int, pyairmore.data.contacts.Group
+                     ],
+                     name: str) -> pyairmore.data.contacts.Group:
+        # todo 2 - method doc
+
+        if isinstance(id_or_group, pyairmore.data.contacts.Group):
+            group_id = int(id_or_group.id)
+        else:
+            group_id = int(id_or_group)
+
+        request = pyairmore.request.contacts.UpdateGroupRequest(
+            self.session, group_id, str(name)
+        )
+        self.session.send(request)
+        self.get_groups()
+
+        group = next(filter(lambda g: g.id == str(group_id), _groups))
+        return group

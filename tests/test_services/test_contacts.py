@@ -68,3 +68,28 @@ class GroupServiceCreateGroupTestCase(unittest.TestCase):
     def test_group_source_name(self):
         source = self.service.create_group("foo").source
         self.assertEqual(source.name, "baz")
+
+
+class GroupServiceUpdateGroupTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.service = pyairmore.services.contacts.GroupService(
+            cls.session
+        )
+
+    @unittest.skip("bug to be fixed")
+    def test_update_name(self):  # todo 1 - bug - fix this
+        groups = self.service.get_groups()
+        former_group = next(filter(lambda g: g.id == "1", groups))
+        former_group_name = former_group.name
+
+        self.service.update_group(former_group.id, "foo")
+        groups = self.service.get_groups()
+        latter_group = next(filter(lambda g: g.id == "1", groups))
+        latter_group_name = latter_group.name
+
+        self.assertNotEqual(former_group_name, latter_group_name)
