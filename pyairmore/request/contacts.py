@@ -46,3 +46,18 @@ class UpdateGroupRequest(pyairmore.request.AirmoreRequest):
         self.prepare_url("/", {"Key": "ContactUpdateGroup"})
         self.prepare_headers({})
         self.prepare_body("", None, [{"ID": int(id), "GroupName": str(name)}])
+
+
+class DeleteGroupRequest(pyairmore.request.AirmoreRequest):
+    """A request to create a group.
+
+    | **Endpoint:** /?Key=ContactDeleteGroup
+    """
+
+    # noinspection PyShadowingBuiltins
+    def __init__(self,session: pyairmore.request.AirmoreSession, id: int):
+        super().__init__(session)
+
+        self.prepare_url("/", {"Key": "ContactDeleteGroup"})
+        self.prepare_headers({})
+        self.prepare_body("", None, [{"ID": int(id), "GroupName": ""}])

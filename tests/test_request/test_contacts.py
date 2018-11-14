@@ -115,3 +115,45 @@ class UpdateGroupRequestTestCase(unittest.TestCase):
     def test_body_children_has_key_id(self):
         for d in self.body:  # type: dict
             self.assertIn("ID", d)
+
+
+class DeleteGroupRequestTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.request = pyairmore.request.contacts.DeleteGroupRequest(
+            cls.session, 1
+        )
+        if isinstance(cls.request.body, bytes):
+            cls.body = json.loads(
+                cls.request.body.decode("utf-8")
+            )  # type: list
+        else:
+            cls.body = json.loads(cls.request.body)  # type: list
+
+    def test_url_startswith(self):
+        self.assertTrue(self.request.url.startswith(self.session.base_url))
+
+    def test_url_endswith(self):
+        self.assertTrue(self.request.url.endswith("/?Key=ContactDeleteGroup"))
+
+    def test_method(self):
+        self.assertEqual(self.request.method, "POST")
+
+    def test_body_parent_type(self):
+        self.assertIsInstance(self.body, list)
+
+    def test_body_children_type(self):
+        for d in self.body:  # type: dict
+            self.assertIsInstance(d, dict)
+
+    def test_body_children_name_empty(self):
+        for d in self.body:  # type: dict
+            self.assertEqual(d.get("GroupName"), "")
+
+    def test_body_children_has_key_id(self):
+        for d in self.body:  # type: dict
+            self.assertIn("ID", d)
