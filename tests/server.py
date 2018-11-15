@@ -80,22 +80,17 @@ def message_get_list() -> Response:
 
 
 groups = []  # type: typing.List[dict]
+with open("resources/test/contact_group_get_list.txt", "r") as f:
+    # noinspection PyRedeclaration
+    groups = json.loads(f.read())
 
 
 def contact_group_get_list() -> Response:
-    global groups
-    if not groups:
-        with open("resources/test/contact_group_get_list.txt", "r") as f:
-            groups = json.loads(f.read())
-
     response = Response(json.dumps(groups), mimetype="text/plain")
-
     return response
 
 
 def contact_add_group() -> Response:
-    global groups  # type: typing.List[dict]
-
     def get_next_id() -> int:
         ids = [g["ID"] for g in groups]
         return max(ids)+1
@@ -123,8 +118,6 @@ def contact_add_group() -> Response:
 
 
 def contact_update_group() -> Response:
-    global groups
-
     # noinspection PyShadowingBuiltins
     id = request.get_json(silent=True)[0]["ID"]
     name = request.get_json(silent=True)[0]["GroupName"]
@@ -148,6 +141,22 @@ def contact_update_group() -> Response:
     return Response(json.dumps([response_data]), mimetype="text/plain")
 
 
+def contact_delete_group() -> Response:
+    # noinspection PyShadowingBuiltins
+    id = request.get_json(silent=True)[0]["ID"]
+
+    index_to_remove = None
+    group_json = ""
+    for i, g in enumerate(groups):
+        if g["ID"] == int(id):
+            index_to_remove = i
+            group_json = json.dumps({"ID": int(g["ID"]), "GroupName": ""})
+            break
+
+    del groups[index_to_remove]
+    return Response(group_json, mimetype="text/plain")
+
+
 @app.route('/', methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
@@ -167,6 +176,8 @@ def path():
         ("MessageGetList", message_get_list),
         ("ContactGroupGetList", contact_group_get_list),
         ("ContactAddGroup", contact_add_group),
+        ("ContactUpdateGroup", contact_update_group),
+        ("ContactDeleteGroup", contact_delete_group),
     )  # type: typing.Tuple[typing.Tuple[str, callable]]
 
     for response in responses:
@@ -177,7 +188,3 @@ def path():
                 return res
 
     return Response(default_response, mimetype="text/plain")
-
-
-if __name__ == "__main__":
-    app.run(port=2333)

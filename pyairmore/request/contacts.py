@@ -55,7 +55,7 @@ class DeleteGroupRequest(pyairmore.request.AirmoreRequest):
     """
 
     # noinspection PyShadowingBuiltins
-    def __init__(self,session: pyairmore.request.AirmoreSession, id: int):
+    def __init__(self, session: pyairmore.request.AirmoreSession, id: int):
         super().__init__(session)
 
         self.prepare_url("/", {"Key": "ContactDeleteGroup"})

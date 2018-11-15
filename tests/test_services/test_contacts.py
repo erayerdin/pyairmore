@@ -52,11 +52,6 @@ class GroupServiceCreateGroupTestCase(unittest.TestCase):
             cls.session
         )
 
-    def test_group_id(self):
-        former_count = len(self.service.get_groups())
-        group = self.service.create_group("foo")
-        self.assertEqual(group.id, str(former_count+1))
-
     def test_group_name(self):
         group = self.service.create_group("foo")
         self.assertEqual(group.name, "foo")
@@ -81,15 +76,38 @@ class GroupServiceUpdateGroupTestCase(unittest.TestCase):
             cls.session
         )
 
-    @unittest.skip("bug to be fixed")
-    def test_update_name(self):  # todo 1 - bug - fix this
+    def test_update_name(self):
         groups = self.service.get_groups()
-        former_group = next(filter(lambda g: g.id == "1", groups))
+        former_group = next(filter(lambda g: g.id == "2", groups))
         former_group_name = former_group.name
 
         self.service.update_group(former_group.id, "foo")
         groups = self.service.get_groups()
-        latter_group = next(filter(lambda g: g.id == "1", groups))
+        latter_group = next(filter(lambda g: g.id == "2", groups))
         latter_group_name = latter_group.name
 
         self.assertNotEqual(former_group_name, latter_group_name)
+
+
+class GroupServiceDeleteGroupTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.session = pyairmore.request.AirmoreSession(
+            ipaddress.IPv4Address("127.0.0.1")
+        )
+        cls.service = pyairmore.services.contacts.GroupService(
+            cls.session
+        )
+
+    @unittest.skip("bug to be fixed")
+    def test_delete(self):  # todo 2 - bug - fix test
+        groups = self.service.get_groups()
+        group = next(filter(lambda g: g.id == "1", groups), None)
+        self.assertIsNotNone(group)
+
+        was_deleted = self.service.delete_group(1)
+        self.assertTrue(was_deleted)
+        groups = self.service.get_groups()
+        group = next(filter(lambda g: g.id == "1", groups), None)
+        self.assertIsNone(group)
