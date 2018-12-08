@@ -349,3 +349,4 @@ pip-selfcheck.json
 
 
 # End of https://www.gitignore.io/api/git,python,eclipse,virtualenv,pycharm+all,jetbrains+all
+.atomignore
