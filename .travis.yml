@@ -44,6 +44,7 @@ jobs:
     install:
     - pip install -r requirements.txt
     - pip install -r dev.requirements.txt
+    - pip install pillow
     before_script:
       - python tests/server.py &
     script:
