@@ -7,6 +7,7 @@ jobs:
   - stage: PEP8 Style Checking
     python: '3.6'
     install:
+      - pip install -r requirements.txt
       - pip install -r dev.requirements.txt
       - pip install pycodestyle
     script:
@@ -16,30 +17,31 @@ jobs:
   - stage: Document Warning Checking
     python: '3.6'
     install:
+      - pip install -r requirements.txt
       - pip install -r dev.requirements.txt
     script:
       - mkdocs build --verbose --strict
   - stage: Testing with Python 3.5
     python: '3.5'
     install:
+    - pip install -r requirements.txt
     - pip install -r dev.requirements.txt
-    - pip install requests --upgrade
     before_script:
       - python tests/server.py &
     script: pytest tests/
   - stage: Testing with Python 3.6
     python: '3.6'
     install:
+    - pip install -r requirements.txt
     - pip install -r dev.requirements.txt
-    - pip install requests --upgrade
     before_script:
       - python tests/server.py &
     script: pytest tests/
   - stage: Covering Package
     python: '3.6'
     install:
+    - pip install -r requirements.txt
     - pip install -r dev.requirements.txt
-    - pip install coverage codecov
     before_script:
       - python tests/server.py &
     script:
