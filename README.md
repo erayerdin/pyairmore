@@ -5,6 +5,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyairmore.svg?style=flat-square&logo=python&logoColor=white)][pypi_url]
 [![PyPI - License](https://img.shields.io/pypi/l/pyairmore.svg?style=flat-square)](LICENSE.txt)
 [![Codacy grade](https://img.shields.io/codacy/grade/f9dcb968a7cc4804b64ae7e0fac3a5be.svg?logo=codacy&logoColor=white&style=flat-square)](https://www.codacy.com/app/erayerdin/pyairmore?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erayerdin/pyairmore&amp;utm_campaign=Badge_Grade)
+[![Style Black](https://img.shields.io/badge/style-black-black.svg?style=flat-square)](https://black.readthedocs.io/)
 [![Telegram](https://img.shields.io/badge/telegram-%40erayerdin-%2332afed.svg?style=flat-square&logo=telegram&logoColor=white)](https://t.me/erayerdin)
 
 [pypi_url]: https://pypi.org/project/pyairmore/

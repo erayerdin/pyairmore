@@ -26,8 +26,11 @@ class DeviceService(pyairmore.services.Service):
         detail.brand = data.get("Brand", None)
         detail.device_name = data.get("DeviceName", None)
         # if PhoneNumber is "", then stay None
-        detail.phone_number = None if data.get("PhoneNumber", None) == "" \
+        detail.phone_number = (
+            None
+            if data.get("PhoneNumber", None) == ""
             else data.get("PhoneNumber", None)
+        )
         detail.imei = data.get("IMEI", None)
         detail.imsi = data.get("IMSI", None)
         detail.mac_address = data.get("MAC", None)
@@ -37,8 +40,9 @@ class DeviceService(pyairmore.services.Service):
 
         # resolution parsing
         if "*" in data.get("Resolution", ""):
-            detail.resolution = tuple(map(int, data.get("Resolution")
-                                          .split("*", 1)))
+            detail.resolution = tuple(
+                map(int, data.get("Resolution").split("*", 1))
+            )
 
         detail.is_root = False if data.get("Root", None) == 0 else True
         detail.sdk_version_id = data.get("SDKVersionID", 1)

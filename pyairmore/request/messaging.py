@@ -22,10 +22,12 @@ class SendMessageRequest(pyairmore.request.AirmoreRequest):
     | **Endpoint:** /?Key=MessageSend
     """
 
-    def __init__(self,
-                 session: pyairmore.request.AirmoreSession,
-                 phone: str,
-                 content: str):
+    def __init__(
+        self,
+        session: pyairmore.request.AirmoreSession,
+        phone: str,
+        content: str,
+    ):
         """
         :param session: Session object, which will be passed to super init.
         :param phone: Phone to send message to.
@@ -40,7 +42,7 @@ class SendMessageRequest(pyairmore.request.AirmoreRequest):
         data = {
             "Phone": str(phone),
             "Content": str(content),
-            "UniqueID": uuid.uuid1().hex
+            "UniqueID": uuid.uuid1().hex,
         }
         self.prepare_body("", None, [data])
 
@@ -51,11 +53,13 @@ class ChatHistoryRequest(pyairmore.request.AirmoreRequest):
     | **Endpoint:** /?Key=MessageGetList
     """
 
-    def __init__(self,
-                 session: pyairmore.request.AirmoreSession,
-                 id: str,
-                 start: int = 0,
-                 limit: int = 10):
+    def __init__(
+        self,
+        session: pyairmore.request.AirmoreSession,
+        id: str,
+        start: int = 0,
+        limit: int = 10,
+    ):
         """
         :param session: Session object, which will be passed to super init.
         :param id: ID of message.
@@ -68,9 +72,5 @@ class ChatHistoryRequest(pyairmore.request.AirmoreRequest):
         self.prepare_url("/", {"Key": "MessageGetList"})
         self.prepare_headers({})
 
-        data = {
-            "ID": str(id),
-            "Start": int(start),
-            "Limit": int(limit)
-        }
+        data = {"ID": str(id), "Start": int(start), "Limit": int(limit)}
         self.prepare_body("", None, data)

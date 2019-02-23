@@ -12,7 +12,7 @@ setup(
     name="pyairmore",
     version=pyairmore.__version__,
     description="PyAirmore is a communication layer between an Android Airmore"
-                " server and the client.",
+    " server and the client.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/erayerdin/pyairmore",
@@ -41,5 +41,5 @@ setup(
     license="Apache License 2.0",
     tests_require=["nose", "tox", "coverage"],
     install_requires=DEPS,
-    zip_safe=False
+    zip_safe=False,
 )

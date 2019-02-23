@@ -60,8 +60,7 @@ def message_get_list() -> Response:
                 limit = max_limit - 1 if limit > max_limit - 1 else limit - 1
             else:
                 del objs[0]
-                limit = max_limit - start if limit > max_limit \
-                    else limit
+                limit = max_limit - start if limit > max_limit else limit
 
             for i in range(limit):
                 the_chosen_one = random.choice(json_file_data)
@@ -77,7 +76,7 @@ def message_get_list() -> Response:
     return response
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def path():
     arg = request.args.get("Key", None, str)
 
@@ -85,10 +84,14 @@ def path():
         default_response = f.read()
 
     responses = (
-        ("PhoneCheckAuthorization",
-         lambda: Response('"0"', mimetype="text/plain")),
-        ("PhoneRequestAuthorization",
-         lambda: Response("true", mimetype="text/plain")),
+        (
+            "PhoneCheckAuthorization",
+            lambda: Response('"0"', mimetype="text/plain"),
+        ),
+        (
+            "PhoneRequestAuthorization",
+            lambda: Response("true", mimetype="text/plain"),
+        ),
         ("PhoneGetDeviceInfo", get_device_info),
         ("PhoneRefreshScreen", refresh_screen),
         ("MessageGetLatest", message_get_latest),

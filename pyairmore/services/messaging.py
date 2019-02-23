@@ -28,7 +28,7 @@ class MessagingService(pyairmore.services.Service):
 
     @staticmethod
     def __convert_list_json_to_messages(
-            response: requests.Response
+        response: requests.Response
     ) -> typing.List[pyairmore.data.messaging.Message]:
         """Will convert a message response from Airmore server to a list of
         ``Message`` objects.
@@ -51,8 +51,7 @@ class MessagingService(pyairmore.services.Service):
                 date_format = "%Y/%m/%d %H:%M:%S"
 
                 message.datetime = datetime.datetime.strptime(
-                    date_str,
-                    date_format
+                    date_str, date_format
                 )
 
             message.content = d.get("Content", None)
@@ -72,8 +71,9 @@ class MessagingService(pyairmore.services.Service):
 
         return messages
 
-    def fetch_message_history(self) \
-            -> typing.List[pyairmore.data.messaging.Message]:
+    def fetch_message_history(
+        self
+    ) -> typing.List[pyairmore.data.messaging.Message]:
         """Gets latest messages from your phone. These messages will be
         historically descending order.
 
@@ -87,10 +87,12 @@ class MessagingService(pyairmore.services.Service):
 
         return self.__convert_list_json_to_messages(response)
 
-    def send_message(self,
-                     contact_or_phone: typing.Union[str],
-                     # todo 3 - support contact
-                     content: str) -> None:
+    def send_message(
+        self,
+        contact_or_phone: typing.Union[str],
+        # todo 3 - support contact
+        content: str,
+    ) -> None:
         """Sends a single message.
 
         .. note::
@@ -109,13 +111,12 @@ class MessagingService(pyairmore.services.Service):
         if response.text != "2":
             raise MessageRequestGSMError()
 
-    def fetch_chat_history(self,
-                           message_or_id: typing.Union[
-                               pyairmore.data.messaging.Message, str
-                           ],
-                           start: int = 0,
-                           limit: int = 10) \
-            -> typing.List[pyairmore.data.messaging.Message]:
+    def fetch_chat_history(
+        self,
+        message_or_id: typing.Union[pyairmore.data.messaging.Message, str],
+        start: int = 0,
+        limit: int = 10,
+    ) -> typing.List[pyairmore.data.messaging.Message]:
         """Fetches a chat that a particular message is in. These messages will
         be historically descending order.
 

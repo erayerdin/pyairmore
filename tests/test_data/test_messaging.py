@@ -42,10 +42,7 @@ class MessageTestCase(unittest.TestCase):
 
     def test_type_type(self):
         for m in self.messages:
-            self.assertIsInstance(
-                m.type,
-                pyairmore.data.messaging.MessageType
-            )
+            self.assertIsInstance(m.type, pyairmore.data.messaging.MessageType)
 
     def test_was_read_type(self):
         for m in self.messages:
@@ -74,7 +71,7 @@ class MessageComparisonTestCase(unittest.TestCase):
             "name": "Foo",
             "phone": "123",
             "datetime": now,
-            "content": "Lorem ipsum"
+            "content": "Lorem ipsum",
         }
 
         for k, v in eq_attrs.items():

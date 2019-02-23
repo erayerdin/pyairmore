@@ -31,16 +31,16 @@ class AirmoreRequestTestCase(unittest.TestCase):
         self.request.prepare_url("/foo", {})
         self.assertEqual(
             self.session.base_url,
-            self.request.url[:len(self.session.base_url)]
+            self.request.url[: len(self.session.base_url)],
         )
 
     def test_prepare_url_without_params(self):
         self.request.prepare_url("/foo", {})
-        self.assertEqual(self.request.url, self.session.base_url+"/foo")
+        self.assertEqual(self.request.url, self.session.base_url + "/foo")
 
     def test_prepare_url_with_params(self):
         self.request.prepare_url("/", {"foo": "bar"})
-        self.assertEqual(self.request.url, self.session.base_url+"/?foo=bar")
+        self.assertEqual(self.request.url, self.session.base_url + "/?foo=bar")
 
 
 class AirmoreSessionTestCase(unittest.TestCase):

@@ -32,7 +32,7 @@ class AirmoreRequest(requests.PreparedRequest):
         depending on your ``self.__session``.
         """
 
-        super().prepare_url(self.__session.base_url+url, params)
+        super().prepare_url(self.__session.base_url + url, params)
 
 
 class ApplicationOpenRequest(AirmoreRequest):
@@ -79,8 +79,9 @@ class AirmoreSession(requests.Session):
         from contextlib import closing
 
         is_running = False
-        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM))\
-                as sock:
+        with closing(
+            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ) as sock:
             if sock.connect_ex((str(self.ip_address), self.port)) == 0:
                 is_running = True
 
@@ -141,10 +142,13 @@ class AirmoreSession(requests.Session):
 
         return is_accepted
 
-    def send(self, request: AirmoreRequest,
-             force_authorize: bool = True,
-             force_connectivity_check: bool = True,
-             **kwargs) -> requests.Response:
+    def send(
+        self,
+        request: AirmoreRequest,
+        force_authorize: bool = True,
+        force_connectivity_check: bool = True,
+        **kwargs
+    ) -> requests.Response:
         """Sending request with an ``AirmoreRequest``."""
 
         if force_connectivity_check:
@@ -179,11 +183,13 @@ class ServerUnreachableException(Exception):
     """
 
     def __init__(self):
-        message = "Server is found idle. The reasons might be:\n"\
-                  "- You might not even have installed Airmore to your "\
-                  "device.\n"\
-                  "- Sometimes your Airmore server goes idle for battery "\
-                  "saving. You need to open it up again. "
+        message = (
+            "Server is found idle. The reasons might be:\n"
+            "- You might not even have installed Airmore to your "
+            "device.\n"
+            "- Sometimes your Airmore server goes idle for battery "
+            "saving. You need to open it up again. "
+        )
         super().__init__(message)
 
 
@@ -193,6 +199,8 @@ class AuthorizationException(Exception):
     """
 
     def __init__(self):
-        message = "Could not authorize. Please accept authorization on " \
-                  "target device. "
+        message = (
+            "Could not authorize. Please accept authorization on "
+            "target device. "
+        )
         super().__init__(message)

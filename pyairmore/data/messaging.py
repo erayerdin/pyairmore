@@ -30,14 +30,16 @@ class Message:
         if self is other:
             return True
 
-        return all((
-            self.id == other.id,
-            self.name == other.name,
-            self.phone == other.phone,
-            self.datetime == other.datetime,
-            self.content == other.content,
-            self.type == other.type,
-        ))
+        return all(
+            (
+                self.id == other.id,
+                self.name == other.name,
+                self.phone == other.phone,
+                self.datetime == other.datetime,
+                self.content == other.content,
+                self.type == other.type,
+            )
+        )
 
     def __ne__(self, other: "Message") -> bool:
         return not self.__eq__(other)

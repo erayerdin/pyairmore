@@ -11,10 +11,9 @@ class DeviceDetailsRequest(pyairmore.request.AirmoreRequest):
     def __init__(self, session: pyairmore.request.AirmoreSession):
         super().__init__(session)
 
-        self.prepare_url("/", {
-            "Key": "PhoneGetDeviceInfo",
-            "IsDetail": "true"
-        })
+        self.prepare_url(
+            "/", {"Key": "PhoneGetDeviceInfo", "IsDetail": "true"}
+        )
 
 
 class DeviceScreenshotRequest(pyairmore.request.AirmoreRequest):

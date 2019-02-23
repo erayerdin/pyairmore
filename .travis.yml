@@ -4,16 +4,16 @@ cache: pip
 if: commit_message !~ /appveyor/
 jobs:
   include:
-  - stage: PEP8 Style Checking
+  - stage: Black Style Checking
     python: '3.6'
     install:
       - pip install -r requirements.txt
       - pip install -r dev.requirements.txt
-      - pip install pycodestyle
+      - pip install black
     script:
-      - pycodestyle --statistics --count --verbose pyairmore/
-      - pycodestyle --statistics --count --verbose tests/
-      - pycodestyle --statistics --count --verbose setup.py
+      - black --check --diff --verbose pyairmore/
+      - black --check --diff --verbose tests/
+      - black --check --diff --verbose setup.py
   - stage: Document Warning Checking
     python: '3.6'
     install:

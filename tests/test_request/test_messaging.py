@@ -37,9 +37,9 @@ class SendMessageRequestTestCase(unittest.TestCase):
             cls.session, "321", "foo"
         )
         if isinstance(cls.request.body, bytes):
-            cls.body = json.loads(
-                cls.request.body.decode("utf-8")
-            )[0]  # type: dict
+            cls.body = json.loads(cls.request.body.decode("utf-8"))[
+                0
+            ]  # type: dict
         else:
             cls.body = json.loads(cls.request.body)[0]  # type: dict
 
