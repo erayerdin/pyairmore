@@ -16,7 +16,6 @@ class AirmoreRequest(requests.PreparedRequest):
 
     def prepare_method(self, method):
         """Will generate "POST" no matter what."""
-
         self.method = "POST"
 
     def prepare_url(self, url, params):
@@ -31,7 +30,6 @@ class AirmoreRequest(requests.PreparedRequest):
 
         depending on your ``self.__session``.
         """
-
         super().prepare_url(self.__session.base_url + url, params)
 
 
@@ -65,6 +63,7 @@ class AirmoreSession(requests.Session):
 
         self.ip_address = ip_address  # type: ipaddress.IPv4Address
         self.port = port  # type: int
+        self.is_mocked = False
 
     @property
     def is_server_running(self) -> bool:
@@ -74,6 +73,9 @@ class AirmoreSession(requests.Session):
 
         :return: True if the server runs.
         """
+
+        if getattr(self, "is_mocked"):
+            return True
 
         import socket
         from contextlib import closing

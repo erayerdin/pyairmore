@@ -4,43 +4,43 @@ import urllib3.util.url
 
 import pyairmore.request
 
+from tests import HTTPrettyTestCase
 
-class AirmoreRequestTestCase(unittest.TestCase):
+
+class TestAirmoreRequest:
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setup_class(cls):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
 
-    def setUp(self):
-        super().setUp()
+    def setup_method(self):
         self.request = pyairmore.request.AirmoreRequest(self.session)
 
     def test_method(self):
         self.request.prepare_method("get")
-        self.assertEqual(self.request.method, "POST")
+        assert self.request.method == "POST"
 
         self.request.prepare_method("whatever")
-        self.assertEqual(self.request.method, "POST")
+        assert self.request.method == "POST"
 
         self.request.prepare_method("post")
-        self.assertEqual(self.request.method, "POST")
+        assert self.request.method == "POST"
 
     def test_prepare_url_contains_base_url(self):
         self.request.prepare_url("/foo", {})
-        self.assertEqual(
-            self.session.base_url,
-            self.request.url[: len(self.session.base_url)],
+        assert (
+            self.session.base_url
+            == self.request.url[: len(self.session.base_url)]
         )
 
     def test_prepare_url_without_params(self):
         self.request.prepare_url("/foo", {})
-        self.assertEqual(self.request.url, self.session.base_url + "/foo")
+        assert self.request.url == self.session.base_url + "/foo"
 
     def test_prepare_url_with_params(self):
         self.request.prepare_url("/", {"foo": "bar"})
-        self.assertEqual(self.request.url, self.session.base_url + "/?foo=bar")
+        assert self.request.url == self.session.base_url + "/?foo=bar"
 
 
 class AirmoreSessionTestCase(unittest.TestCase):
@@ -52,6 +52,7 @@ class AirmoreSessionTestCase(unittest.TestCase):
         )
 
     def test_is_server_running(self):
+        setattr(self.session, "is_mocked", True)
         self.assertTrue(self.session.is_server_running)
 
     def test_is_application_open(self):
