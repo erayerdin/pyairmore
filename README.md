@@ -66,8 +66,8 @@ sake of simplicity, we will use a service called `DeviceService`.
 
     details.power  # 0.74
     details.device_name  # "My device"
-    details.is_root  # True, bcoz real men use rooted device
-    details.imei  # muhahaha
+    details.is_root  # True
+    details.imei  # "123456"
     details.call_history_count  # 666
 
     # so on and so forth
