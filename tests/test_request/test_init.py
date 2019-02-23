@@ -5,6 +5,7 @@ import urllib3.util.url
 import pyairmore.request
 
 from tests import HTTPrettyTestCase
+from tests.test_request import AirmoreRequestTestCase
 
 
 class TestAirmoreRequest:
@@ -41,6 +42,13 @@ class TestAirmoreRequest:
     def test_prepare_url_with_params(self):
         self.request.prepare_url("/", {"foo": "bar"})
         assert self.request.url == self.session.base_url + "/?foo=bar"
+
+
+class TestApplicationOpenRequest(AirmoreRequestTestCase):
+    request_class = pyairmore.request.ApplicationOpenRequest
+
+    def test_url(self):
+        assert self.request.url.endswith("/?Key=PhoneCheckAuthorization")
 
 
 class AirmoreSessionTestCase(unittest.TestCase):
