@@ -1,6 +1,7 @@
 import ipaddress
-import unittest
 import urllib3.util.url
+import unittest
+from unittest import mock
 
 import pyairmore.request
 
@@ -59,9 +60,11 @@ class TestAirmoreSession:
         )
         cls.parsed = urllib3.util.url.parse_url(cls.session.base_url)
 
-    def test_is_server_running(self):
-        setattr(self.session, "is_mocked", True)
+    @mock.patch("pyairmore.request.socket.socket")
+    def test_is_server_running(self, mock_sock):
+        mock_sock().connect_ex.return_value = 0
         assert self.session.is_server_running
+        assert mock_sock.called
 
     def test_is_application_open(self):
         assert self.session.is_application_open

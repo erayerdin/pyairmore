@@ -1,7 +1,9 @@
 """``request`` package contains some classes extending another classes from
 ``requests`` package to make easier requests to an Airmore server. """
 
+from contextlib import closing
 import ipaddress
+import socket
 
 import requests.exceptions
 
@@ -63,7 +65,6 @@ class AirmoreSession(requests.Session):
 
         self.ip_address = ip_address  # type: ipaddress.IPv4Address
         self.port = port  # type: int
-        self.is_mocked = False
 
     @property
     def is_server_running(self) -> bool:
@@ -73,18 +74,13 @@ class AirmoreSession(requests.Session):
 
         :return: True if the server runs.
         """
-
-        if getattr(self, "is_mocked"):
-            return True
-
-        import socket
-        from contextlib import closing
-
         is_running = False
         with closing(
             socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         ) as sock:
-            if sock.connect_ex((str(self.ip_address), self.port)) == 0:
+            sock_val = sock.connect_ex((str(self.ip_address), self.port))
+            print(sock_val)
+            if sock_val == 0:
                 is_running = True
 
         return is_running
@@ -147,7 +143,7 @@ class AirmoreSession(requests.Session):
     def send(
         self,
         request: AirmoreRequest,
-        force_authorize: bool = True,
+        force_authorization: bool = True,
         force_connectivity_check: bool = True,
         **kwargs
     ) -> requests.Response:
@@ -159,7 +155,7 @@ class AirmoreSession(requests.Session):
             if not is_connectivity_present:
                 raise ServerUnreachableException()
 
-        if force_authorize:
+        if force_authorization:
             is_authorized = self.request_authorization()
 
             if not is_authorized:
