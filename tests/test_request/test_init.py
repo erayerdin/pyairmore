@@ -51,32 +51,31 @@ class TestApplicationOpenRequest(AirmoreRequestTestCase):
         assert self.request.url.endswith("/?Key=PhoneCheckAuthorization")
 
 
-class AirmoreSessionTestCase(unittest.TestCase):
+class TestAirmoreSession:
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setup_class(cls):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
+        cls.parsed = urllib3.util.url.parse_url(cls.session.base_url)
 
     def test_is_server_running(self):
         setattr(self.session, "is_mocked", True)
-        self.assertTrue(self.session.is_server_running)
+        assert self.session.is_server_running
 
     def test_is_application_open(self):
-        self.assertTrue(self.session.is_application_open)
+        assert self.session.is_application_open
 
     def test_request_authorization(self):
-        self.assertTrue(self.session.request_authorization())
+        assert self.session.request_authorization()
 
     def test_base_url_scheme(self):
-        parsed = urllib3.util.url.parse_url(self.session.base_url)
-        self.assertEqual(parsed.scheme, "http")
+        assert self.parsed.scheme == "http"
 
     def test_base_url_hostname(self):
         parsed = urllib3.util.url.parse_url(self.session.base_url)
-        self.assertEqual(parsed.hostname, "127.0.0.1")
+        assert self.parsed.hostname == "127.0.0.1"
 
     def test_base_url_port(self):
         parsed = urllib3.util.url.parse_url(self.session.base_url)
-        self.assertEqual(parsed.port, 2333)
+        assert self.parsed.port == 2333
