@@ -19,22 +19,7 @@ jobs:
       - pip install -r dev.requirements.txt
     script:
       - mkdocs build --verbose --strict
-  - stage: Testing with Specified requests (Python 3.5)
-    python: '3.5'
-    install: pip install -r dev.requirements.txt
-    before_script:
-      - python tests/server.py &
-    script: pytest tests/
-  - stage: Testing with Specified requests (Python 3.6)
-    python: '3.6'
-    os:
-    - linux
-    - osx
-    install: pip install -r dev.requirements.txt
-    before_script:
-      - python tests/server.py &
-    script: pytest tests/
-  - stage: Testing with Latest Stable requests (Python 3.5)
+  - stage: Testing with Python 3.5
     python: '3.5'
     install:
     - pip install -r dev.requirements.txt
@@ -42,7 +27,7 @@ jobs:
     before_script:
       - python tests/server.py &
     script: pytest tests/
-  - stage: Testing with Latest Stable requests (Python 3.6)
+  - stage: Testing with Python 3.6
     python: '3.6'
     install:
     - pip install -r dev.requirements.txt
