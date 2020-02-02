@@ -2,7 +2,7 @@ import pyairmore.request
 
 
 class AirmoreRequestTestCase:
-    request_class: pyairmore.request.AirmoreRequest = None
+    request_class = None
     request_class_args = tuple()
     request_class_kwargs = dict()
 
@@ -16,4 +16,4 @@ class AirmoreRequestTestCase:
         )
 
     def test_url(self):
-        raise NotImplemented
+        raise NotImplementedError()
