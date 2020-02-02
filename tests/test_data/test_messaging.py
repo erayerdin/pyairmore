@@ -1,5 +1,4 @@
 import datetime
-
 import ipaddress
 import unittest
 
@@ -15,9 +14,7 @@ class MessageTestCase(unittest.TestCase):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.service = pyairmore.services.messaging.MessagingService(
-            cls.session
-        )
+        cls.service = pyairmore.services.messaging.MessagingService(cls.session)
         cls.messages = cls.service.fetch_message_history()
 
     def test_id_type(self):

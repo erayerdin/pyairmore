@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-import random
-
 import json
+import random
 import typing
-from flask import Flask, request, Response
+
+from flask import Flask, Response, request
 
 app = Flask(__name__)
 
@@ -84,14 +84,8 @@ def path():
         default_response = f.read()
 
     responses = (
-        (
-            "PhoneCheckAuthorization",
-            lambda: Response('"0"', mimetype="text/plain"),
-        ),
-        (
-            "PhoneRequestAuthorization",
-            lambda: Response("true", mimetype="text/plain"),
-        ),
+        ("PhoneCheckAuthorization", lambda: Response('"0"', mimetype="text/plain"),),
+        ("PhoneRequestAuthorization", lambda: Response("true", mimetype="text/plain"),),
         ("PhoneGetDeviceInfo", get_device_info),
         ("PhoneRefreshScreen", refresh_screen),
         ("MessageGetLatest", message_get_latest),

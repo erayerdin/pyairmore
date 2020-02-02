@@ -1,11 +1,9 @@
 import ipaddress
-import urllib3.util.url
-import unittest
 from unittest import mock
 
-import pyairmore.request
+import urllib3.util.url
 
-from tests import HTTPrettyTestCase
+import pyairmore.request
 from tests.test_request import AirmoreRequestTestCase
 
 
@@ -31,10 +29,7 @@ class TestAirmoreRequest:
 
     def test_prepare_url_contains_base_url(self):
         self.request.prepare_url("/foo", {})
-        assert (
-            self.session.base_url
-            == self.request.url[: len(self.session.base_url)]
-        )
+        assert self.session.base_url == self.request.url[: len(self.session.base_url)]
 
     def test_prepare_url_without_params(self):
         self.request.prepare_url("/foo", {})
@@ -77,8 +72,8 @@ class TestAirmoreSession:
 
     def test_base_url_hostname(self):
         parsed = urllib3.util.url.parse_url(self.session.base_url)
-        assert self.parsed.hostname == "127.0.0.1"
+        assert parsed.hostname == "127.0.0.1"
 
     def test_base_url_port(self):
         parsed = urllib3.util.url.parse_url(self.session.base_url)
-        assert self.parsed.port == 2333
+        assert parsed.port == 2333

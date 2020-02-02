@@ -12,9 +12,7 @@ class MessageHistoryRequestTestCase(unittest.TestCase):
         cls.session = pyairmore.request.AirmoreSession(
             ipaddress.IPv4Address("127.0.0.1")
         )
-        cls.request = pyairmore.request.messaging.MessageHistoryRequest(
-            cls.session
-        )
+        cls.request = pyairmore.request.messaging.MessageHistoryRequest(cls.session)
 
     def test_url_startswith(self):
         self.assertTrue(self.request.url.startswith(self.session.base_url))
@@ -37,9 +35,7 @@ class SendMessageRequestTestCase(unittest.TestCase):
             cls.session, "321", "foo"
         )
         if isinstance(cls.request.body, bytes):
-            cls.body = json.loads(cls.request.body.decode("utf-8"))[
-                0
-            ]  # type: dict
+            cls.body = json.loads(cls.request.body.decode("utf-8"))[0]  # type: dict
         else:
             cls.body = json.loads(cls.request.body)[0]  # type: dict
 
@@ -74,9 +70,7 @@ class ChatHistoryRequestTestCase(unittest.TestCase):
             cls.session, "foo", 5, 15
         )
         if isinstance(cls.request.body, bytes):
-            cls.body = json.loads(
-                cls.request.body.decode("utf-8")
-            )  # type: dict
+            cls.body = json.loads(cls.request.body.decode("utf-8"))  # type: dict
         else:
             cls.body = json.loads(cls.request.body)  # type: dict
 

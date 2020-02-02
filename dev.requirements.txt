@@ -3,3 +3,4 @@ pytest-cov==2.6.0
 Flask==1.0.2
 mkdocs==1.0.4
 httpretty==0.9.6
+pre-commit==2.0.1

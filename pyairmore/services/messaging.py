@@ -1,9 +1,8 @@
 """Service and utilities related to messaging aspect."""
-import requests
-
+import datetime
 import typing
 
-import datetime
+import requests
 
 import pyairmore
 import pyairmore.data.messaging
@@ -28,7 +27,7 @@ class MessagingService(pyairmore.services.Service):
 
     @staticmethod
     def __convert_list_json_to_messages(
-        response: requests.Response
+        response: requests.Response,
     ) -> typing.List[pyairmore.data.messaging.Message]:
         """Will convert a message response from Airmore server to a list of
         ``Message`` objects.
@@ -50,9 +49,7 @@ class MessagingService(pyairmore.services.Service):
                 date_str = str(date_str)
                 date_format = "%Y/%m/%d %H:%M:%S"
 
-                message.datetime = datetime.datetime.strptime(
-                    date_str, date_format
-                )
+                message.datetime = datetime.datetime.strptime(date_str, date_format)
 
             message.content = d.get("Content", None)
 
@@ -71,18 +68,14 @@ class MessagingService(pyairmore.services.Service):
 
         return messages
 
-    def fetch_message_history(
-        self
-    ) -> typing.List[pyairmore.data.messaging.Message]:
+    def fetch_message_history(self) -> typing.List[pyairmore.data.messaging.Message]:
         """Gets latest messages from your phone. These messages will be
         historically descending order.
 
         Will return empty list if could not be found.
         """
 
-        request = pyairmore.request.messaging.MessageHistoryRequest(
-            self.session
-        )
+        request = pyairmore.request.messaging.MessageHistoryRequest(self.session)
         response = self.session.send(request)
 
         return self.__convert_list_json_to_messages(response)

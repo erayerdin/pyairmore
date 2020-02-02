@@ -1,9 +1,9 @@
 """Service and utilities related to device aspect."""
 
-import pyairmore.services
+import pyairmore.data.device
 import pyairmore.request
 import pyairmore.request.device
-import pyairmore.data.device
+import pyairmore.services
 
 
 class DeviceService(pyairmore.services.Service):
@@ -40,9 +40,7 @@ class DeviceService(pyairmore.services.Service):
 
         # resolution parsing
         if "*" in data.get("Resolution", ""):
-            detail.resolution = tuple(
-                map(int, data.get("Resolution").split("*", 1))
-            )
+            detail.resolution = tuple(map(int, data.get("Resolution").split("*", 1)))
 
         detail.is_root = False if data.get("Root", None) == 0 else True
         detail.sdk_version_id = data.get("SDKVersionID", 1)
@@ -73,7 +71,7 @@ class DeviceService(pyairmore.services.Service):
         return detail
 
     # noinspection PyUnresolvedReferences
-    def take_screenshot(self) -> "PIL.Image.Image":
+    def take_screenshot(self) -> "PIL.Image.Image":  # noqa
         """Takes screenshot of the target device.
 
         This method relies on ``pillow`` package. You need to install it.
@@ -82,9 +80,7 @@ class DeviceService(pyairmore.services.Service):
         """
         import PIL.Image
 
-        request = pyairmore.request.device.DeviceScreenshotRequest(
-            self.session
-        )
+        request = pyairmore.request.device.DeviceScreenshotRequest(self.session)
         response = self.session.send(request)
         content = response.text
 

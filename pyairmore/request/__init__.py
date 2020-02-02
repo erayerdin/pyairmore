@@ -1,9 +1,9 @@
 """``request`` package contains some classes extending another classes from
 ``requests`` package to make easier requests to an Airmore server. """
 
-from contextlib import closing
 import ipaddress
 import socket
+from contextlib import closing
 
 import requests.exceptions
 
@@ -75,9 +75,7 @@ class AirmoreSession(requests.Session):
         :return: True if the server runs.
         """
         is_running = False
-        with closing(
-            socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        ) as sock:
+        with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
             sock_val = sock.connect_ex((str(self.ip_address), self.port))
             print(sock_val)
             if sock_val == 0:
@@ -198,7 +196,6 @@ class AuthorizationException(Exception):
 
     def __init__(self):
         message = (
-            "Could not authorize. Please accept authorization on "
-            "target device. "
+            "Could not authorize. Please accept authorization on " "target device. "
         )
         super().__init__(message)

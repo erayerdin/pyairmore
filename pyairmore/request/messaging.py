@@ -23,10 +23,7 @@ class SendMessageRequest(pyairmore.request.AirmoreRequest):
     """
 
     def __init__(
-        self,
-        session: pyairmore.request.AirmoreSession,
-        phone: str,
-        content: str,
+        self, session: pyairmore.request.AirmoreSession, phone: str, content: str,
     ):
         """
         :param session: Session object, which will be passed to super init.
