@@ -11,9 +11,9 @@ jobs:
       - pip install -r dev.requirements.txt
       - pip install black
     script:
-      - black --check --diff -l 79 --verbose pyairmore/
-      - black --check --diff -l 79 --verbose tests/
-      - black --check --diff -l 79 --verbose setup.py
+      - black --check --diff --verbose pyairmore/
+      - black --check --diff --verbose tests/
+      - black --check --diff --verbose setup.py
   - stage: Document Warning Checking
     python: '3.6'
     install:
