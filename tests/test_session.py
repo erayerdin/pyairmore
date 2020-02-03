@@ -21,3 +21,12 @@ def test_is_application_open_one(
         "/", "POST", query_string={"Key": "PhoneCheckAuthorization"}
     ).respond_with_data('"1"')
     assert not airmore_session.is_application_open
+
+
+def test_is_application_open_invalid_status(
+    httpserver: HTTPServer, authorization_required, airmore_session
+):
+    httpserver.expect_request(
+        "/", "POST", query_string={"Key": "PhoneCheckAuthorization"}
+    ).respond_with_data('"1"', status=400)
+    assert not airmore_session.is_application_open
