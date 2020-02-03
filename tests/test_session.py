@@ -12,3 +12,12 @@ def test_is_application_open_zero(
         "/", "POST", query_string={"Key": "PhoneCheckAuthorization"}
     ).respond_with_data('"0"')
     assert airmore_session.is_application_open
+
+
+def test_is_application_open_one(
+    httpserver: HTTPServer, authorization_required, airmore_session
+):
+    httpserver.expect_request(
+        "/", "POST", query_string={"Key": "PhoneCheckAuthorization"}
+    ).respond_with_data('"1"')
+    assert not airmore_session.is_application_open
