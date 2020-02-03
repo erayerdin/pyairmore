@@ -1,27 +1,32 @@
 import ipaddress
 import unittest
 
+import pytest
+
 import pyairmore.data.messaging
 import pyairmore.request.messaging
 import pyairmore.services.messaging
+from pyairmore.services.messaging import MessagingService
 
 
-class MessagingServiceFetchMessageHistoryTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.service = pyairmore.services.messaging.MessagingService(cls.session)
-        cls.messages = cls.service.fetch_message_history()
+@pytest.fixture
+def _messaging_service(airmore_session):
+    return MessagingService(airmore_session)
 
-    def test_return_type(self):
-        self.assertTrue(hasattr(self.messages, "__iter__"))
 
-    def test_children_type(self):
-        for m in self.messages:
-            self.assertIsInstance(m, pyairmore.data.messaging.Message)
+@pytest.fixture
+def _messaging_service_fetch_message_history(_messaging_service):
+    return _messaging_service.fetch_message_history()
+
+
+class TestMessagingServiceFetchMessageHistory:
+    # TODO refactor tests
+    def test_return_type(self, _messaging_service_fetch_message_history):
+        assert hasattr(_messaging_service_fetch_message_history, "__iter__")
+
+    def test_children_type(self, _messaging_service_fetch_message_history):
+        for m in _messaging_service_fetch_message_history:
+            assert isinstance(m, pyairmore.data.messaging.Message)
 
 
 class MessagingServiceSendMessageTestCase(unittest.TestCase):
