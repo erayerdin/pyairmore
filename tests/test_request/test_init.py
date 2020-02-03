@@ -1,10 +1,17 @@
 import ipaddress
 from unittest import mock
 
+import pytest
 import urllib3.util.url
 
 import pyairmore.request
+from pyairmore.request import AirmoreRequest
 from tests.test_request import AirmoreRequestTestCase
+
+
+@pytest.fixture
+def _airmore_request(airmore_request_factory):
+    return airmore_request_factory(AirmoreRequest)
 
 
 class TestAirmoreRequest:
@@ -17,27 +24,30 @@ class TestAirmoreRequest:
     def setup_method(self):
         self.request = pyairmore.request.AirmoreRequest(self.session)
 
-    def test_method(self):
-        self.request.prepare_method("get")
-        assert self.request.method == "POST"
+    def test_method(self, _airmore_request):
+        _airmore_request.prepare_method("get")
+        assert _airmore_request.method == "POST"
 
-        self.request.prepare_method("whatever")
-        assert self.request.method == "POST"
+        _airmore_request.prepare_method("whatever")
+        assert _airmore_request.method == "POST"
 
-        self.request.prepare_method("post")
-        assert self.request.method == "POST"
+        _airmore_request.prepare_method("post")
+        assert _airmore_request.method == "POST"
 
-    def test_prepare_url_contains_base_url(self):
-        self.request.prepare_url("/foo", {})
-        assert self.session.base_url == self.request.url[: len(self.session.base_url)]
+    def test_prepare_url_contains_base_url(self, _airmore_request, airmore_session):
+        _airmore_request.prepare_url("/foo", {})
+        assert (
+            airmore_session.base_url
+            == _airmore_request.url[: len(airmore_session.base_url)]
+        )
 
-    def test_prepare_url_without_params(self):
-        self.request.prepare_url("/foo", {})
-        assert self.request.url == self.session.base_url + "/foo"
+    def test_prepare_url_without_params(self, _airmore_request, airmore_session):
+        _airmore_request.prepare_url("/foo", {})
+        assert _airmore_request.url == airmore_session.base_url + "/foo"
 
-    def test_prepare_url_with_params(self):
-        self.request.prepare_url("/", {"foo": "bar"})
-        assert self.request.url == self.session.base_url + "/?foo=bar"
+    def test_prepare_url_with_params(self, _airmore_request, airmore_session):
+        _airmore_request.prepare_url("/", {"foo": "bar"})
+        assert _airmore_request.url == airmore_session.base_url + "/?foo=bar"
 
 
 class TestApplicationOpenRequest(AirmoreRequestTestCase):
