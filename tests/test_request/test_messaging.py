@@ -1,11 +1,12 @@
-import ipaddress
 import json
-import unittest
 
 import pytest
 
-import pyairmore.request
-from pyairmore.request.messaging import MessageHistoryRequest, SendMessageRequest
+from pyairmore.request.messaging import (
+    ChatHistoryRequest,
+    MessageHistoryRequest,
+    SendMessageRequest,
+)
 
 
 @pytest.fixture
@@ -60,35 +61,36 @@ class TestSendMessageRequest:
         assert len(_send_message_request_body.get("UniqueID")) > 0
 
 
-class ChatHistoryRequestTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.request = pyairmore.request.messaging.ChatHistoryRequest(
-            cls.session, "foo", 5, 15
-        )
-        if isinstance(cls.request.body, bytes):
-            cls.body = json.loads(cls.request.body.decode("utf-8"))  # type: dict
-        else:
-            cls.body = json.loads(cls.request.body)  # type: dict
+@pytest.fixture
+def _chat_history_request(airmore_request_factory):
+    return airmore_request_factory(ChatHistoryRequest, "foo", 5, 15)
 
-    def test_url_startswith(self):
-        self.assertTrue(self.request.url.startswith(self.session.base_url))
 
-    def test_url_endswith(self):
-        self.assertTrue(self.request.url.endswith("/?Key=MessageGetList"))
+@pytest.fixture
+def _chat_history_request_body(_chat_history_request):
+    if isinstance(_chat_history_request.body, bytes):
+        body = json.loads(_chat_history_request.body.decode("utf-8"))  # type: dict
+    else:
+        body = json.loads(_chat_history_request.body)  # type: dict
 
-    def test_method(self):
-        self.assertEqual(self.request.method, "POST")
+    return body
 
-    def test_body_id(self):
-        self.assertEqual(self.body.get("ID"), "foo")
 
-    def test_body_start(self):
-        self.assertEqual(self.body.get("Start"), 5)
+class TestChatHistoryRequest:
+    def test_url_startswith(self, _chat_history_request, airmore_session):
+        assert _chat_history_request.url.startswith(airmore_session.base_url)
 
-    def test_body_limit(self):
-        self.assertEqual(self.body.get("Limit"), 15)
+    def test_url_endswith(self, _chat_history_request):
+        assert _chat_history_request.url.endswith("/?Key=MessageGetList")
+
+    def test_method(self, _chat_history_request):
+        assert _chat_history_request.method == "POST"
+
+    def test_body_id(self, _chat_history_request_body):
+        assert _chat_history_request_body.get("ID") == "foo"
+
+    def test_body_start(self, _chat_history_request_body):
+        assert _chat_history_request_body.get("Start") == 5
+
+    def test_body_limit(self, _chat_history_request_body):
+        assert _chat_history_request_body.get("Limit") == 15
