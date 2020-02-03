@@ -5,8 +5,7 @@ import pytest
 import urllib3.util.url
 
 import pyairmore.request
-from pyairmore.request import AirmoreRequest
-from tests.test_request import AirmoreRequestTestCase
+from pyairmore.request import AirmoreRequest, ApplicationOpenRequest
 
 
 @pytest.fixture
@@ -50,11 +49,14 @@ class TestAirmoreRequest:
         assert _airmore_request.url == airmore_session.base_url + "/?foo=bar"
 
 
-class TestApplicationOpenRequest(AirmoreRequestTestCase):
-    request_class = pyairmore.request.ApplicationOpenRequest
+@pytest.fixture
+def _application_open_request(airmore_request_factory):
+    return airmore_request_factory(ApplicationOpenRequest)
 
-    def test_url(self):
-        assert self.request.url.endswith("/?Key=PhoneCheckAuthorization")
+
+class TestApplicationOpenRequest:
+    def test_url(self, _application_open_request):
+        assert _application_open_request.url.endswith("/?Key=PhoneCheckAuthorization")
 
 
 class TestAirmoreSession:
