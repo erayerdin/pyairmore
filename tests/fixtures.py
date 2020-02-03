@@ -1,18 +1,10 @@
-from ipaddress import IPv4Address
-
 import pytest
 
-from pyairmore.request import AirmoreSession
+import pyairmore.request
 
 
 @pytest.fixture
-def airmore_session(httpserver):
-    return AirmoreSession(IPv4Address("127.0.0.1"), 2333)  # TODO will change to mock
+def airmore_session():
+    from ipaddress import IPv4Address
 
-
-@pytest.fixture
-def airmore_request_factory(airmore_session):
-    def factory(klass, *args, **kwargs):
-        return klass(airmore_session, *args, **kwargs)
-
-    return factory
+    return pyairmore.request.AirmoreSession(IPv4Address("127.0.0.1"))
