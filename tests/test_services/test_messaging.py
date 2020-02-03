@@ -29,21 +29,13 @@ class TestMessagingServiceFetchMessageHistory:
             assert isinstance(m, pyairmore.data.messaging.Message)
 
 
-class MessagingServiceSendMessageTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.service = pyairmore.services.messaging.MessagingService(cls.session)
+class TestMessagingServiceSendMessage:
+    def test_send_message_success(self, _messaging_service):
+        _messaging_service.send_message("321", "lorem")  # won't raise error
 
-    def test_send_message_success(self):
-        self.service.send_message("321", "lorem")
-
-    def test_send_message_fail(self):
-        with self.assertRaises(pyairmore.services.messaging.MessageRequestGSMError):
-            self.service.send_message("123", "ipsum")
+    def test_send_message_fail(self, _messaging_service):
+        with pytest.raises(pyairmore.services.messaging.MessageRequestGSMError):
+            _messaging_service.send_message("123", "ipsum")
 
 
 class MessagingServiceFetchChatHistoryTestCase(unittest.TestCase):
