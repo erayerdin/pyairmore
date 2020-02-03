@@ -1,10 +1,8 @@
-import ipaddress
 from unittest import mock
 
 import pytest
 import urllib3.util.url
 
-import pyairmore.request
 from pyairmore.request import AirmoreRequest, ApplicationOpenRequest
 
 
@@ -14,15 +12,6 @@ def _airmore_request(airmore_request_factory):
 
 
 class TestAirmoreRequest:
-    @classmethod
-    def setup_class(cls):
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-
-    def setup_method(self):
-        self.request = pyairmore.request.AirmoreRequest(self.session)
-
     def test_method(self, _airmore_request):
         _airmore_request.prepare_method("get")
         assert _airmore_request.method == "POST"
@@ -59,33 +48,31 @@ class TestApplicationOpenRequest:
         assert _application_open_request.url.endswith("/?Key=PhoneCheckAuthorization")
 
 
-class TestAirmoreSession:
-    @classmethod
-    def setup_class(cls):
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.parsed = urllib3.util.url.parse_url(cls.session.base_url)
+@pytest.fixture
+def _parsed_session_url(airmore_session):
+    return urllib3.util.url.parse_url(airmore_session.base_url)
 
+
+class TestAirmoreSession:
     @mock.patch("pyairmore.request.socket.socket")
-    def test_is_server_running(self, mock_sock):
+    def test_is_server_running(self, mock_sock, airmore_session):
         mock_sock().connect_ex.return_value = 0
-        assert self.session.is_server_running
+        assert airmore_session.is_server_running
         assert mock_sock.called
 
-    def test_is_application_open(self):
-        assert self.session.is_application_open
+    def test_is_application_open(self, airmore_session):
+        assert airmore_session.is_application_open
 
-    def test_request_authorization(self):
-        assert self.session.request_authorization()
+    def test_request_authorization(self, airmore_session):
+        assert airmore_session.request_authorization()
 
-    def test_base_url_scheme(self):
-        assert self.parsed.scheme == "http"
+    def test_base_url_scheme(self, _parsed_session_url):
+        assert _parsed_session_url.scheme == "http"
 
-    def test_base_url_hostname(self):
-        parsed = urllib3.util.url.parse_url(self.session.base_url)
-        assert parsed.hostname == "127.0.0.1"
+    def test_base_url_hostname(self, _parsed_session_url):
+        # parsed = urllib3.util.url.parse_url(self.session.base_url)
+        assert _parsed_session_url.hostname == "127.0.0.1"
 
-    def test_base_url_port(self):
-        parsed = urllib3.util.url.parse_url(self.session.base_url)
-        assert parsed.port == 2333
+    def test_base_url_port(self, _parsed_session_url):
+        # parsed = urllib3.util.url.parse_url(self.session.base_url)
+        assert _parsed_session_url.port == 2333
