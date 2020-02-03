@@ -2,26 +2,26 @@ import ipaddress
 import json
 import unittest
 
+import pytest
+
 import pyairmore.request
+from pyairmore.request.messaging import MessageHistoryRequest
 
 
-class MessageHistoryRequestTestCase(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.request = pyairmore.request.messaging.MessageHistoryRequest(cls.session)
+@pytest.fixture
+def _message_history_request(airmore_request_factory, airmore_session):
+    return airmore_request_factory(MessageHistoryRequest)
 
-    def test_url_startswith(self):
-        self.assertTrue(self.request.url.startswith(self.session.base_url))
 
-    def test_url_endswith(self):
-        self.assertTrue(self.request.url.endswith("/?Key=MessageGetLatest"))
+class TestMessageHistoryRequest:
+    def test_url_startswith(self, _message_history_request, airmore_session):
+        assert _message_history_request.url.startswith(airmore_session.base_url)
 
-    def test_method(self):
-        self.assertEqual(self.request.method, "POST")
+    def test_url_endswith(self, _message_history_request):
+        assert _message_history_request.url.endswith("/?Key=MessageGetLatest")
+
+    def test_method(self, _message_history_request):
+        assert _message_history_request.method == "POST"
 
 
 class SendMessageRequestTestCase(unittest.TestCase):

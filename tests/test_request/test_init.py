@@ -70,9 +70,7 @@ class TestAirmoreSession:
         assert _parsed_session_url.scheme == "http"
 
     def test_base_url_hostname(self, _parsed_session_url):
-        # parsed = urllib3.util.url.parse_url(self.session.base_url)
         assert _parsed_session_url.hostname == "127.0.0.1"
 
     def test_base_url_port(self, _parsed_session_url):
-        # parsed = urllib3.util.url.parse_url(self.session.base_url)
         assert _parsed_session_url.port == 2333
