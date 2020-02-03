@@ -1,6 +1,3 @@
-import ipaddress
-import unittest
-
 import pytest
 
 import pyairmore.data.messaging
@@ -38,66 +35,65 @@ class TestMessagingServiceSendMessage:
             _messaging_service.send_message("123", "ipsum")
 
 
-class MessagingServiceFetchChatHistoryTestCase(unittest.TestCase):
+class TestMessagingServiceFetchChatHistory:
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.session = pyairmore.request.AirmoreSession(
-            ipaddress.IPv4Address("127.0.0.1")
-        )
-        cls.service = pyairmore.services.messaging.MessagingService(cls.session)
+    def setup_class(cls):
         cls.message_id = "5bdf514735c35b82881109f7"
         cls.max_limit = 20
 
-    def test_nonexistent_id(self):
+    def test_nonexistent_id(self, _messaging_service):
         # noinspection PyShadowingBuiltins
         id = "foo"
-        messages = self.service.fetch_chat_history(id)
-        self.assertEqual(messages, [])
+        messages = _messaging_service.fetch_chat_history(id)
+        assert messages == []
 
-    def test_message_nostart_nolimit_first_id(self):
-        messages = self.service.fetch_chat_history(self.message_id)
+    def test_message_nostart_nolimit_first_id(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(self.message_id)
         # noinspection PyUnresolvedReferences
         message = messages[0]  # type: pyairmore.services.messaging.Message
-        self.assertEqual(message.id, self.message_id)
+        assert message.id == self.message_id
 
-    def test_message_nostart_nolimit_len(self):
-        messages = self.service.fetch_chat_history(self.message_id)
-        self.assertEqual(len(messages), 10)
+    def test_message_nostart_nolimit_len(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(self.message_id)
+        assert len(messages) == 10
 
-    def test_message_nostart_50limit_first_id(self):
-        messages = self.service.fetch_chat_history(self.message_id, limit=50)
+    def test_message_nostart_50limit_first_id(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(self.message_id, limit=50)
         message = messages[0]
-        self.assertEqual(message.id, self.message_id)
+        assert message.id == self.message_id
 
-    def test_message_nostart_50limit_len(self):
-        messages = self.service.fetch_chat_history(self.message_id, limit=50)
-        self.assertEqual(len(messages), self.max_limit)
+    def test_message_nostart_50limit_len(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(self.message_id, limit=50)
+        assert len(messages) == self.max_limit
 
-    def test_message_5start_nolimit_first_id(self):
+    def test_message_5start_nolimit_first_id(self, _messaging_service):
         will_repeat = True
 
         while will_repeat:
             try:
-                messages = self.service.fetch_chat_history(self.message_id, start=5)
+                messages = _messaging_service.fetch_chat_history(
+                    self.message_id, start=5
+                )
                 message = messages[0]
-                self.assertNotEqual(message.id, self.message_id)
+                assert message.id != self.message_id
                 will_repeat = False
             except self.failureException:
                 pass
 
-    def test_message_5start_nolimit_len(self):
-        messages = self.service.fetch_chat_history(self.message_id, start=5)
-        self.assertEqual(len(messages), 10)
+    def test_message_5start_nolimit_len(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(self.message_id, start=5)
+        assert len(messages) == 10
 
-    def test_message_5start_50limit_len(self):
-        messages = self.service.fetch_chat_history(self.message_id, start=5, limit=50)
-        self.assertEqual(len(messages), 15)
+    def test_message_5start_50limit_len(self, _messaging_service):
+        messages = _messaging_service.fetch_chat_history(
+            self.message_id, start=5, limit=50
+        )
+        assert len(messages) == 15
 
-    def test_fetch_via_message_object(self):
-        messages = self.service.fetch_message_history()
+    def test_fetch_via_message_object(self, _messaging_service):
+        messages = _messaging_service.fetch_message_history()
         that_message_filter = filter(lambda m: m.id == self.message_id, messages)
         that_message = next(that_message_filter)
 
-        chat = self.service.fetch_chat_history(that_message)
-        self.assertNotEqual(chat, [])
+        chat = _messaging_service.fetch_chat_history(that_message)
+        assert chat != []
