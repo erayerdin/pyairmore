@@ -16,3 +16,8 @@ def authorization_required(httpserver: HTTPServer):
     httpserver.expect_request(
         "/", "POST", query_string={"Key": "PhoneRequestAuthorization"}
     ).respond_with_data("true")
+
+
+@pytest.fixture
+def httpserver_listen_address():
+    return ("localhost", 2333)

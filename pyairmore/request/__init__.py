@@ -141,8 +141,8 @@ class AirmoreSession(requests.Session):
     def send(
         self,
         request: AirmoreRequest,
-        force_authorization: bool = True,
-        force_connectivity_check: bool = True,
+        force_authorization=True,
+        force_connectivity_check=True,
         **kwargs
     ) -> requests.Response:
         """Sending request with an ``AirmoreRequest``."""
