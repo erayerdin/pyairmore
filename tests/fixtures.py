@@ -2,6 +2,7 @@ import pytest
 from pytest_httpserver import HTTPServer
 
 import pyairmore.request
+import pyairmore.services.device
 
 
 @pytest.fixture
@@ -9,6 +10,11 @@ def airmore_session():
     from ipaddress import IPv4Address
 
     return pyairmore.request.AirmoreSession(IPv4Address("127.0.0.1"))
+
+
+@pytest.fixture
+def device_service(airmore_session, authorization_required):
+    return pyairmore.services.device.DeviceService(airmore_session)
 
 
 @pytest.fixture
