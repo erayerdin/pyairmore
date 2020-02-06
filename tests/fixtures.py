@@ -1,9 +1,12 @@
+from datetime import datetime
+
 import pytest
 from pytest_httpserver import HTTPServer
 
 import pyairmore.request
 import pyairmore.services.device
 import pyairmore.services.messaging
+from pyairmore.data.messaging import Message, MessageType
 
 
 @pytest.fixture
@@ -21,6 +24,18 @@ def device_service(airmore_session, authorization_required):
 @pytest.fixture
 def messaging_service(airmore_session, authorization_required):
     return pyairmore.services.messaging.MessagingService(airmore_session)
+
+
+@pytest.fixture
+def message():
+    m = Message()
+    m.id = "5bdd46f06905c8a085247638"
+    m.name = "Eray Erdin"
+    m.phone = "123"
+    m.datetime = datetime.now()
+    m.content = "lorem ipsum"
+    m.type = MessageType.RECEIVED
+    return m
 
 
 @pytest.fixture

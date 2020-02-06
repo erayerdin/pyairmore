@@ -20,14 +20,14 @@ class Message:
         self.id = None  # type: str
         self.name = None  # type: str
         self.phone = None  # type: str
-        self.datetime = None  # type: datetime.datetime
+        self.datetime = None  # type_: datetime.datetime
         self.content = None  # type: str
         self.type = MessageType.RECEIVED  # type: MessageType
         self.was_read = True  # type: bool
         self.count = 1  # type: int
 
     def __eq__(self, other: "Message") -> bool:
-        if self is other:
+        if self is other:  # pragma: no cover
             return True
 
         return all(
