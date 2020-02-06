@@ -3,6 +3,7 @@ from pytest_httpserver import HTTPServer
 
 import pyairmore.request
 import pyairmore.services.device
+import pyairmore.services.messaging
 
 
 @pytest.fixture
@@ -15,6 +16,11 @@ def airmore_session():
 @pytest.fixture
 def device_service(airmore_session, authorization_required):
     return pyairmore.services.device.DeviceService(airmore_session)
+
+
+@pytest.fixture
+def messaging_service(airmore_session, authorization_required):
+    return pyairmore.services.messaging.MessagingService(airmore_session)
 
 
 @pytest.fixture

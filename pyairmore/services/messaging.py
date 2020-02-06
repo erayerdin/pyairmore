@@ -66,6 +66,7 @@ class MessagingService(pyairmore.services.Service):
             message.count = d.get("Count", 1)
             messages.append(message)
 
+        messages.sort(reverse=True)
         return messages
 
     def fetch_message_history(self) -> typing.List[pyairmore.data.messaging.Message]:
