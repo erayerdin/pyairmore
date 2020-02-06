@@ -26,8 +26,8 @@ class Message:
         self.was_read = True  # type: bool
         self.count = 1  # type: int
 
-    def __eq__(self, other: "Message") -> bool:
-        if self is other:  # pragma: no cover
+    def __eq__(self, other: "Message") -> bool:  # pragma: no cover
+        if self is other:
             return True
 
         return all(
@@ -41,17 +41,17 @@ class Message:
             )
         )
 
-    def __ne__(self, other: "Message") -> bool:
+    def __ne__(self, other: "Message") -> bool:  # pragma: no cover
         return not self.__eq__(other)
 
-    def __gt__(self, other: "Message") -> bool:
+    def __gt__(self, other: "Message") -> bool:  # pragma: no cover
         return self.datetime > other.datetime
 
-    def __ge__(self, other: "Message") -> bool:
+    def __ge__(self, other: "Message") -> bool:  # pragma: no cover
         return self.datetime >= other.datetime
 
-    def __lt__(self, other: "Message") -> bool:
+    def __lt__(self, other: "Message") -> bool:  # pragma: no cover
         return self.datetime < other.datetime
 
-    def __le__(self, other: "Message") -> bool:
+    def __le__(self, other: "Message") -> bool:  # pragma: no cover
         return self.datetime <= other.datetime
