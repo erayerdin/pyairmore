@@ -1,3 +1,9 @@
+# Warning
+
+I don't have time to update this project. I'm looking for a maintainer. If you think you can tackle it, hit me on [Telegram](https://t.me/erayerdin).
+
+Otherwise, you can think this project is quite much abandoned.
+
 # PyAirmore
 
 [![PyPI](https://img.shields.io/pypi/v/pyairmore.svg?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/pyairmore/)
